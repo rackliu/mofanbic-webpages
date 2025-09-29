@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>莫凡比精品服飾 - 台北女裝推薦 | 專為現代女性打造的時尚天堂</title>
+    <meta name="description" content="莫凡比精品服飾位於台北安和路，提供精品女裝、設計師品牌女裝、造型顧問服務與VIP尊貴服務。台北高級女裝店推薦，專業時尚服飾顾问為現代女性打造完美穿搭。">
+    <meta name="keywords" content="莫凡比精品服飾,台北女裝推薦,精品女裝,高級女裝店,現代女性時尚,台北時尚服飾,設計師品牌女裝,精品服飾店,造型顧問服務,VIP尊貴服務,台北安和路服飾,流行女裝,精品配件,台灣女裝品牌">
+    <meta name="author" content="莫凡比精品服飾">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="莫凡比精品服飾 - 台北女裝推薦 | 專為現代女性打造的時尚天堂">
+    <meta property="og:description" content="莫凡比精品服飾位於台北安和路，提供精品女裝、設計師品牌女裝、造型顧問服務與VIP尊貴服務。台北高級女裝店推薦。">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.mofanbic.com">
+    <meta property="og:image" content="https://www.mofanbic.com/images/home.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="莫凡比精品服飾 - 台北女裝推薦">
+    <meta name="twitter:description" content="台北精品女裝店推薦，提供設計師品牌女裝與專業造型顧問服務">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 頂部導航 -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-content">
+                <div class="logo">
+                    <h1>莫凡比</h1>
+                    <span class="logo-subtitle">MOFANBIC</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#home">首頁</a></li>
+                    <li><a href="#brand-story">品牌故事</a></li>
+                    <li><a href="#services">服務項目</a></li>
+                    <li><a href="#announcement">重要公告</a></li>
+                    <li><a href="#location">交通資訊</a></li>
+                    <li><a href="#contact">聯繫我們</a></li>
+                </ul>
+                <div class="navbar-actions">
+                    <a href="tel:02-2754-3029" class="contact-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                        </svg>
+                        02-2754-3029
+                    </a>
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 首頁大圖橫幅 -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <img src="images/home.jpg" alt="莫凡比精品服飾 - 台北精品女裝店推薦" class="hero-bg-image">
+        </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title">莫凡比精品服飾</h1>
+                <h2 class="hero-subtitle">專為現代女性打造的時尚天堂</h2>
+                <p class="hero-description">發現屬於您的獨特風格，在這裡每一件精品都是完美的選擇</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('brand-story')">探索品牌</button>
+                    <button class="btn btn-outline" onclick="scrollToSection('services')">服務項目</button>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- 精選服飾商品展示 -->
+    <section id="products" class="products-showcase">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">FEATURED PRODUCTS</span>
+                <h2>精選商品展示</h2>
+                <p>台北精品女裝專業精選的設計師品牌時尚單品，展現現代女性的獨特品味</p>
+            </div>
+            <div class="products-carousel">
+                <div class="carousel-container">
+                    <div class="carousel-track" id="carouselTrack">
+                        <!-- 商品圖片將由 JavaScript 動態載入 -->
+                    </div>
+                    <button class="carousel-btn carousel-btn-prev" id="prevBtn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m15 18-6-6 6-6"/>
+                        </svg>
+                    </button>
+                    <button class="carousel-btn carousel-btn-next" id="nextBtn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="carousel-indicators" id="carouselIndicators">
+                    <!-- 指示點將由 JavaScript 動態生成 -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 品牌故事區塊 -->
+    <section id="brand-story" class="brand-story">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">ABOUT US</span>
+                <h2>品牌故事</h2>
+                <p>致力於為每位女性顧客提供最優質的時尚體驗</p>
+            </div>
+            <div class="brand-content">
+                <div class="brand-text">
+                    <div class="brand-description">
+                        <p>莫凡比精品服飾致力於為每位女性顧客提供最優質的台北時尚服飾體驗。我們精選國內設計師品牌女裝，結合專業的造型顧問服務，為現代女性打造獨一無二的個人風格。</p>
+                        <p>無論是日常穿搭、商務場合或特殊活動，我們都能為您找到完美的精品女裝選擇。在台北安和路的高級女裝店，時尚不只是衣著，更是一種生活態度。</p>
+                    </div>
+                    <div class="brand-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">年專業經驗</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">1000+</div>
+                            <div class="stat-label">滿意顧客</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">10+</div>
+                            <div class="stat-label">精選品牌</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="brand-image">
+                    <img src="images/mofanbic_home.jpg" alt="莫凡比精品服飾 - 台北女裝推薦品牌形象">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服務項目展示 -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">OUR SERVICES</span>
+                <h2>服務項目</h2>
+                <p>全方位的時尚服務，滿足您的每一個需求</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">👗</div>
+                    <h3>精品女裝</h3>
+                    <p>精選台灣設計師品牌女裝，從經典優雅到前衛時尚，滿足現代女性的各種穿搭需求</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">💎</div>
+                    <h3>精緻配件</h3>
+                    <p>精品配件、珠寶首飾、絲巾等時尚配件，為女性整體造型增添奢華質感</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">✨</div>
+                    <h3>專業造型顧問</h3>
+                    <p>資深店長根據您的身型、膚色、場合需求為您打造專屬風格</p>
+                </div>
+                <div class="service-card" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon">🎖️</div>
+                    <h3>VIP尊貴服務</h3>
+                    <p>專屬會員優惠、新品預覽、生日特惠、私人購物時光等尊榮體驗</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 重要公告區塊 -->
+    <section id="announcement" class="announcement">
+        <div class="container">
+            <div class="announcement-card">
+                <div class="announcement-icon">🏪</div>
+                <div class="announcement-content">
+                    <h3>重要公告 - 店面搬遷通知</h3>
+                    <p>親愛的顧客，我們即將搬遷至全新地址：<strong>台北市大安區安和路二段69巷8號</strong>。新店面將為您提供更舒適的購物環境和更完善的服務設施。</p>
+                    <div class="announcement-highlight">
+                        <p>📍 新地址：台北市大安區安和路二段69巷8號</p>
+                        <p>⚠️ Facebook上的舊地址資訊已不再適用，請以新地址為準</p>
+                    </div>
+                    <p class="announcement-note">感謝您的支持與理解！</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 交通資訊完整區塊 -->
+    <section id="location" class="location">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">HOW TO FIND US</span>
+                <h2>交通資訊</h2>
+                <p>便利的交通位置，多種方式輕鬆抵達</p>
+            </div>
+
+            <!-- 店面地址 -->
+            <div class="address-section">
+                <div class="address-card">
+                    <h3>📍 店面地址</h3>
+                    <div class="address-details">
+                        <p class="main-address">台北市大安區安和路二段69巷8號</p>
+                        <p class="area-info">位於大安區精華地段，鄰近信義安和商圈、通化夜市，交通便利，生活機能完整</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 交通方式 -->
+            <div class="transport-grid">
+                <!-- 捷運資訊 -->
+                <div class="transport-card">
+                    <div class="transport-header">
+                        <div class="transport-icon mrt-icon">🚇</div>
+                        <h3>捷運資訊</h3>
+                    </div>
+                    <div class="transport-content">
+                        <div class="route-info">
+                            <strong>信義安和站</strong>
+                            <span class="line-badge">淡水信義線</span>
+                        </div>
+                        <ul>
+                            <li><strong>出口：</strong>2A出口</li>
+                            <li><strong>步行時間：</strong>約4分鐘</li>
+                            <li><strong>路線：</strong>出站後沿安和路二段步行即可抵達</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 公車資訊 -->
+                <div class="transport-card">
+                    <div class="transport-header">
+                        <div class="transport-icon bus-icon">🚌</div>
+                        <h3>公車資訊</h3>
+                    </div>
+                    <div class="transport-content">
+                        <div class="bus-routes">
+                            <div class="route-group">
+                                <h4>主要路線</h4>
+                                <div class="route-badges">
+                                    <span class="route-badge">22</span>
+                                    <span class="route-badge">235</span>
+                                    <span class="route-badge">292</span>
+                                    <span class="route-badge">906</span>
+                                    <span class="route-badge">敦化幹線</span>
+                                    <span class="route-badge">226</span>
+                                    <span class="route-badge">275</span>
+                                </div>
+                            </div>
+                            <div class="bus-stops">
+                                <h4>主要站牌</h4>
+                                <ul>
+                                    <li>文昌街口 - 步行2分鐘</li>
+                                    <li>通化街 - 步行4分鐘</li>
+                                    <li>捷運信義安和站 - 步行5分鐘</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 停車資訊 -->
+                <div class="transport-card">
+                    <div class="transport-header">
+                        <div class="transport-icon parking-icon">🅿️</div>
+                        <h3>停車資訊</h3>
+                    </div>
+                    <div class="transport-content">
+                        <div class="parking-list">
+                             <div class="parking-item">
+                                <h4>台北臨江站停車場</h4>
+                                <p><strong>地址：</strong>台北市大安區安和路二段69巷26號</p>
+                                <p><strong>費率：</strong>75元/半小時，最高400元</p>
+                                <p><strong>距離：</strong>步行約1分鐘</p>
+                            </div>
+                            <div class="parking-item">
+                                <h4>停車棧信義安和站</h4>
+                                <p><strong>地址：</strong>台北市大安區安和路二段74巷8號</p>
+                                <p><strong>費率：</strong>50元/小時，最高350元</p>
+                                <p><strong>距離：</strong>步行約3分鐘</p>
+                            </div>
+                            <div class="parking-item">
+                                <h4>停車場洗車打蠟</h4>
+                                <p><strong>地址：</strong>台北市大安區安和路二段87、93號</p>
+                                <p><strong>費率：</strong>約80-100元/小時</p>
+                                <p><strong>距離：</strong>步行約3分鐘</p>
+                            </div>
+                            <div class="parking-item">
+                                <h4>周邊路邊停車</h4>
+                                <p><strong>位置：</strong>信義路四段、安和路二段沿線</p>
+                                <p><strong>費率：</strong>約60-80元/小時</p>
+                                <p><strong>距離：</strong>步行1-5分鐘</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Google Map地圖區塊 -->
+    <section class="map-section">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">FIND US</span>
+                <h2>公司地圖</h2>
+            </div>
+            <div class="map-container">
+                <iframe 
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d903.7771809673008!2d121.55198466959116!3d25.03038409861367!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abccc01465dd%3A0x27cc17323987c470!2zMTA25Y-w5YyX5biC5aSn5a6J5Y2A5a6J5ZKM6Lev5LqM5q61Njnlt7c46Jmf!5e0!3m2!1szh-TW!2stw!4v1755678230039!5m2!1szh-TW!2stw"
+                    width="100%" 
+                    height="450" 
+                    style="border:0;" 
+                    allowfullscreen="" 
+                    loading="lazy" 
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="莫凡比精品服飾位置地圖">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <!-- 聯繫資訊區塊 -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-subtitle">GET IN TOUCH</span>
+                <h2>聯繫我們</h2>
+                <p>歡迎來電諮詢或親臨店面體驗我們的專業服務</p>
+            </div>
+            
+            <div class="contact-grid">
+                <!-- 聯繫資訊 -->
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">📞</div>
+                        <h3>聯繫電話</h3>
+                        <p><a href="tel:02-2754-3029">02-2754-3029</a></p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">🕒</div>
+                        <h3>營業時間</h3>
+                        <p>🕒 週二至週六<br>12:00-20:30</p>
+                        <p>🕒 週日：休假</p>
+                        <p>🕒 週一：休假<br>（可來電預約）</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">📍</div>
+                        <h3>店面地址</h3>
+                        <p>台北市大安區<br>安和路二段69巷8號</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">📘</div>
+                        <h3>Facebook官方粉絲專頁</h3>
+                        <a href="https://www.facebook.com/profile.php?id=100057659101240" target="_blank" class="facebook-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                            追蹤粉絲專頁
+                        </a>
+                        <p class="facebook-note">關注最新時尚資訊與活動</p>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-icon">💬</div>
+                        <h3>LINE官方帳號</h3>
+                        <a href="https://lin.ee/HpATuvG" target="_blank" class="line-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                                <path fill="currentColor" d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.628-.629.628M24 10.314C24 4.943 18.615.572 12.017.572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                            </svg>
+                            加入LINE好友
+                        </a>
+                        <p class="line-note">立即加入獲得最新優惠資訊</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 精美頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <h3>莫凡比精品服飾</h3>
+                        <p>專為現代女性打造的時尚天堂</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="https://lin.ee/HpATuvG" target="_blank" class="social-link line">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                                <path fill="currentColor" d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.628-.629.628M24 10.314C24 4.943 18.615.572 12.017.572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
+                            </svg>
+                        </a>
+                        <a href="tel:02-2754-3029" class="social-link phone">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>聯繫資訊</h4>
+                    <div class="footer-info">
+                        <p>📞 02-2754-3029</p>
+                        <p>📍 台北市大安區安和路二段69巷8號</p>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>服務項目</h4>
+                    <ul class="footer-services">
+                        <li>精品女裝</li>
+                        <li>精緻配件</li>
+                        <li>專業造型顧問</li>
+                        <li>VIP尊貴服務</li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>交通方式</h4>
+                    <div class="footer-transport">
+                        <p>🚇 信義安和站 4分鐘</p>
+                        <p>🚌 多條公車路線</p>
+                        <p>🅿️ 周邊停車便利</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 莫凡比精品服飾 MOFANBIC. All rights reserved.</p>
+                <p class="footer-tagline">專為現代女性打造的時尚天堂</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 回到頂部按鈕 -->
+    <button class="back-to-top" id="backToTop">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="m18 15-6-6-6 6"/>
+        </svg>
+    </button>
+
+    <!-- 臨時解決方案：內嵌關鍵功能避免 CORS 問題 -->
+    <script>
+        // 平滑滾動到指定區域
+        function scrollToSection(sectionId) {
+            const targetElement = document.getElementById(sectionId);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        }
+        
+        // 回到頂部功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const backToTopBtn = document.getElementById('backToTop');
+            if (backToTopBtn) {
+                // 顯示/隱藏回到頂部按鈕
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        backToTopBtn.style.display = 'flex';
+                    } else {
+                        backToTopBtn.style.display = 'none';
+                    }
+                });
+                
+                // 點擊回到頂部
+                backToTopBtn.addEventListener('click', function() {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+            
+            // 手機導航選單
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    navMenu.classList.toggle('active');
+                    hamburger.classList.toggle('active');
+                });
+                
+                // 點擊導航連結後關閉選單
+                const navLinks = document.querySelectorAll('.nav-menu a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', function() {
+                        navMenu.classList.remove('active');
+                        hamburger.classList.remove('active');
+                    });
+                });
+            }
+        });
+    </script>
+    
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
