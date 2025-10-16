@@ -5,15 +5,19 @@
 
 export class ThemeSettings {
     constructor() {
-        this.settings = this.loadSettings();
+        // 先定義預設設定
         this.defaultSettings = {
-            currentTheme: 'default',  // ← 改這裡！default、mid-autumn、christmas、lunar-new-year
+            currentTheme: 'default',
             autoTheme: true,
             rememberTheme: true,
             showIndicator: true,
             animationDuration: 500,
             enableDecorations: true
         };
+        
+        // 然後載入設定
+        this.settings = this.loadSettings();
+        console.log('⚙️ ThemeSettings 初始化完成:', this.settings);
     }
 
     /**
@@ -22,10 +26,12 @@ export class ThemeSettings {
     loadSettings() {
         try {
             const stored = localStorage.getItem('mofanbic-theme-settings');
-            return stored ? { ...this.defaultSettings, ...JSON.parse(stored) } : this.defaultSettings;
+            const loadedSettings = stored ? { ...this.defaultSettings, ...JSON.parse(stored) } : { ...this.defaultSettings };
+            console.log('📂 載入主題設定:', loadedSettings);
+            return loadedSettings;
         } catch (error) {
             console.warn('無法載入主題設定，使用預設設定:', error);
-            return this.defaultSettings;
+            return { ...this.defaultSettings };
         }
     }
 

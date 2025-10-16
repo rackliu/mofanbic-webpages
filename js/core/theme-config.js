@@ -3,11 +3,54 @@
  * 管理網站主題配置與切換
  */
 
+import { ThemeSettings } from './theme-settings.js';
+
 export class ThemeConfig {
     constructor() {
-        this.currentTheme = this.getStoredTheme() || 'default';
         this.themes = this.initializeThemes();
+        this.settings = new ThemeSettings();
+        this.currentTheme = this.determineInitialTheme();
         this.init();
+    }
+
+    /**
+     * 決定初始主題
+     */
+    determineInitialTheme() {
+        const storedTheme = this.getStoredTheme();
+        
+        // 檢查是否啟用自動主題
+        const autoThemeEnabled = this.settings.isAutoThemeEnabled();
+        console.log(`⚙️ 自動主題設定: ${autoThemeEnabled ? '啟用' : '停用'}`);
+        
+        if (autoThemeEnabled) {
+            const now = new Date();
+            const month = now.getMonth() + 1;
+            
+            // 根據月份決定自動主題
+            let autoTheme = 'default';
+            if (month === 9 || month === 10) {
+                autoTheme = 'mid-autumn';
+            } else if (month === 12) {
+                autoTheme = 'christmas';
+            } else if (month === 1 || month === 2) {
+                autoTheme = 'lunar-new-year';
+            }
+            
+            if (autoTheme !== 'default') {
+                console.log(`🎯 自動主題已啟用: ${autoTheme} (當前月份: ${month}月)`);
+                return autoTheme;
+            }
+            
+            console.log(`📅 當前月份 ${month}月 無對應節日主題，使用儲存的主題或預設主題`);
+        } else {
+            console.log('⚙️ 自動主題已停用，使用儲存的主題');
+        }
+        
+        // 使用儲存的主題或預設主題
+        const finalTheme = storedTheme || 'default';
+        console.log(`📌 最終使用主題: ${finalTheme}`);
+        return finalTheme;
     }
 
     /**
@@ -577,7 +620,7 @@ export class ThemeConfig {
     addScrollAnimation() {
         const scroll = document.createElement('div');
         scroll.className = 'scroll-decoration';
-        scroll.innerHTML = '新年快樂，合家平安'; // 吉祥如意賀新歲，迎春接福喜臨門
+        scroll.innerHTML = ''; // 吉祥如意賀新歲，迎春接福喜臨門
         scroll.style.cssText = `
             position: fixed;
             top: 50%;

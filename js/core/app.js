@@ -609,8 +609,18 @@ export class MofanbicApp {
             this.setupThemeEventListeners();
 
             // 建立主題切換開發工具（開發模式）
-            if (this.isDevelopmentMode()) {
+            const isDev = this.isDevelopmentMode();
+            console.log(`🔧 開發模式檢測: ${isDev}`);
+            console.log(`🔧 當前 URL: ${location.href}`);
+            console.log(`🔧 Hostname: ${location.hostname}`);
+            console.log(`🔧 Protocol: ${location.protocol}`);
+            
+            if (isDev) {
+                console.log('🎨 正在建立主題開發工具...');
                 this.createThemeDevTools();
+                console.log('✅ 主題開發工具已建立');
+            } else {
+                console.log('⚠️ 非開發模式，跳過主題開發工具');
             }
 
             console.log('🎨 主題系統已載入');
