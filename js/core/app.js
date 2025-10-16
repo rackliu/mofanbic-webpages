@@ -8,6 +8,9 @@ import { FormHandler } from '../ui/form-handler.js';
 import { AnimationSystem } from '../ui/animations.js';
 import { NotificationSystem } from '../ui/notification.js';
 import { ProductCarousel } from '../ui/carousel.js';
+import { FestivalTheme } from '../ui/festival-theme.js';
+import { ThemeConfig } from './theme-config.js';
+import { ThemeSettings } from './theme-settings.js';
 import { Helpers } from '../utils/helpers.js';
 
 export class MofanbicApp {
@@ -52,7 +55,13 @@ export class MofanbicApp {
             
             // 初始化產品輪播
             this.initializeProductCarousel();
-            
+
+            // 初始化主題系統
+            this.initializeThemeSystem();
+
+            // 初始化節日主題（舊系統，保留向後相容）
+            this.initializeFestivalTheme();
+
             // 設置全域事件處理
             this.setupGlobalEventHandlers();
             
@@ -488,6 +497,55 @@ export class MofanbicApp {
     }
 
     /**
+     * 公開 API：切換主題
+     */
+    setTheme(themeName) {
+        if (this.modules.themeConfig) {
+            return this.modules.themeConfig.setTheme(themeName);
+        }
+        return false;
+    }
+
+    /**
+     * 公開 API：取得當前主題
+     */
+    getCurrentTheme() {
+        if (this.modules.themeConfig) {
+            return this.modules.themeConfig.getCurrentTheme();
+        }
+        return 'default';
+    }
+
+    /**
+     * 公開 API：取得主題配置
+     */
+    getThemeConfig(themeName = null) {
+        if (this.modules.themeConfig) {
+            return this.modules.themeConfig.getThemeConfig(themeName);
+        }
+        return null;
+    }
+
+    /**
+     * 公開 API：取得所有可用主題
+     */
+    getAvailableThemes() {
+        if (this.modules.themeConfig) {
+            return this.modules.themeConfig.getAvailableThemes();
+        }
+        return [];
+    }
+
+    /**
+     * 公開 API：設定自動主題
+     */
+    setAutoTheme() {
+        if (this.modules.themeConfig) {
+            this.modules.themeConfig.setAutoTheme();
+        }
+    }
+
+    /**
      * 獲取應用狀態
      */
     getAppState() {
@@ -530,7 +588,7 @@ export class MofanbicApp {
                     maxImages: 20,
                     pauseOnHover: true
                 });
-                
+
                 console.log('🎠 產品輪播模組已載入');
             } else {
                 console.log('🔍 未找到產品輪播容器，跳過初始化');
@@ -539,12 +597,258 @@ export class MofanbicApp {
             console.error('產品輪播初始化失敗:', error);
         }
     }
+
+    /**
+     * 初始化主題系統
+     */
+    initializeThemeSystem() {
+        try {
+            this.modules.themeConfig = new ThemeConfig();
+
+            // 設置主題切換監聽器
+            this.setupThemeEventListeners();
+
+            // 建立主題切換開發工具（開發模式）
+            if (this.isDevelopmentMode()) {
+                this.createThemeDevTools();
+            }
+
+            console.log('🎨 主題系統已載入');
+        } catch (error) {
+            console.error('主題系統初始化失敗:', error);
+        }
+    }
+
+    /**
+     * 初始化節日主題模組（舊系統，保留向後相容）
+     */
+    initializeFestivalTheme() {
+        try {
+            this.modules.festivalTheme = new FestivalTheme();
+            console.log('🎉 節日主題模組已載入');
+        } catch (error) {
+            console.error('節日主題模組初始化失敗:', error);
+        }
+    }
+
+    /**
+     * 設置主題事件監聽器
+     */
+    setupThemeEventListeners() {
+        // 監聽主題變更事件
+        window.addEventListener('themeChanged', (e) => {
+            const { theme, config } = e.detail;
+            console.log('🎨 主題變更事件觸發:', { theme, config });
+
+            // 顯示主題切換指示器
+            this.showThemeIndicator(theme);
+
+            // 更新通知系統樣式
+            if (this.modules.notification) {
+                console.log('🔧 嘗試更新通知系統主題樣式...');
+                if (typeof this.modules.notification.updateThemeStyles === 'function') {
+                    this.modules.notification.updateThemeStyles(config);
+                    console.log('✅ 通知系統主題樣式更新成功');
+                } else {
+                    console.error('❌ 通知系統缺少 updateThemeStyles 方法！這是錯誤的來源。');
+                }
+            } else {
+                console.warn('⚠️ 通知模組不存在，無法更新主題樣式');
+            }
+
+            // 更新動畫系統樣式
+            if (this.modules.animations) {
+                this.modules.animations.updateThemeStyles(config);
+            }
+        });
+    }
+
+    /**
+     * 顯示主題切換指示器
+     */
+    showThemeIndicator(themeName) {
+        let indicator = document.querySelector('.theme-indicator');
+
+        if (!indicator) {
+            indicator = document.createElement('div');
+            indicator.className = 'theme-indicator';
+            document.body.appendChild(indicator);
+        }
+
+        const themeConfig = this.modules.themeConfig.getThemeConfig(themeName);
+        indicator.textContent = `主題已切換：${themeConfig.name}`;
+        indicator.style.background = themeConfig.colors.primary;
+        indicator.classList.add('visible');
+
+        // 3秒後隱藏指示器
+        setTimeout(() => {
+            indicator.classList.remove('visible');
+        }, 3000);
+    }
+
+    /**
+     * 建立主題開發工具
+     */
+    createThemeDevTools() {
+        // 建立主題設定面板
+        const panel = document.createElement('div');
+        panel.className = 'theme-settings-panel';
+        panel.innerHTML = `
+            <div class="theme-settings-header">
+                <h3>🎨 主題設定</h3>
+                <button class="theme-settings-close" onclick="this.parentElement.parentElement.classList.remove('open')">×</button>
+            </div>
+            <div class="theme-settings-list" id="themeSettingsList">
+                <!-- 主題選項將動態載入 -->
+            </div>
+        `;
+
+        document.body.appendChild(panel);
+
+        // 載入主題選項
+        this.loadThemeOptions(panel);
+
+        // 建立主題切換按鈕
+        const toggleBtn = document.createElement('button');
+        toggleBtn.innerHTML = '🎨';
+        toggleBtn.style.cssText = `
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: var(--shadow-card);
+            z-index: 999;
+            transition: all 0.3s ease;
+        `;
+
+        toggleBtn.addEventListener('click', () => {
+            panel.classList.toggle('open');
+        });
+
+        toggleBtn.addEventListener('mouseenter', () => {
+            toggleBtn.style.transform = 'translateY(-50%) scale(1.1)';
+            toggleBtn.style.background = 'var(--color-primary-hover)';
+        });
+
+        toggleBtn.addEventListener('mouseleave', () => {
+            toggleBtn.style.transform = 'translateY(-50%) scale(1)';
+            toggleBtn.style.background = 'var(--color-primary)';
+        });
+
+        document.body.appendChild(toggleBtn);
+
+        // // 建立除錯資訊顯示 (暫時禁用)
+        // if (this.isDevelopmentMode()) {
+        //     const debugInfo = document.createElement('div');
+        //     debugInfo.className = 'theme-debug-info';
+        //     debugInfo.innerHTML = `
+        //         <div>當前主題: <span id="currentThemeName">${this.modules.themeConfig.getCurrentTheme()}</span></div>
+        //         <div>主題名稱: <span id="currentThemeTitle">${this.modules.themeConfig.getThemeConfig().name}</span></div>
+        //     `;
+        //     document.body.appendChild(debugInfo);
+
+        //     // 監聽主題變更並更新除錯資訊
+        //     window.addEventListener('themeChanged', (e) => {
+        //         const { theme, config } = e.detail;
+        //         debugInfo.querySelector('#currentThemeName').textContent = theme;
+        //         debugInfo.querySelector('#currentThemeTitle').textContent = config.name;
+        //     });
+        // }
+    }
+
+    /**
+     * 載入主題選項
+     */
+    loadThemeOptions(panel) {
+        const container = panel.querySelector('#themeSettingsList');
+        const themes = this.modules.themeConfig.getAvailableThemes();
+
+        container.innerHTML = '';
+
+        themes.forEach(theme => {
+            const option = document.createElement('div');
+            option.className = `theme-option ${this.modules.themeConfig.getCurrentTheme() === theme.id ? 'active' : ''}`;
+            option.innerHTML = `
+                <div class="theme-option-color" style="background: ${theme.colors.primary}"></div>
+                <div class="theme-option-info">
+                    <div class="theme-option-name">${theme.name}</div>
+                    <div class="theme-option-description">${theme.description}</div>
+                </div>
+            `;
+
+            option.addEventListener('click', () => {
+                this.modules.themeConfig.setTheme(theme.id);
+
+                // 更新活動狀態
+                container.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+                option.classList.add('active');
+
+                // 關閉面板
+                panel.classList.remove('open');
+            });
+
+            container.appendChild(option);
+        });
+
+        // 添加自動主題按鈕
+        const autoOption = document.createElement('div');
+        autoOption.className = 'theme-option';
+        autoOption.innerHTML = `
+            <div class="theme-option-color" style="background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4); width: 20px; height: 20px; border-radius: 50%;"></div>
+            <div class="theme-option-info">
+                <div class="theme-option-name">自動主題</div>
+                <div class="theme-option-description">根據當前月份自動選擇節日主題</div>
+            </div>
+        `;
+
+        autoOption.addEventListener('click', () => {
+            this.modules.themeConfig.setAutoTheme();
+
+            // 更新活動狀態
+            container.querySelectorAll('.theme-option').forEach(opt => opt.classList.remove('active'));
+            autoOption.classList.add('active');
+
+            // 關閉面板
+            panel.classList.remove('open');
+        });
+
+        container.appendChild(autoOption);
+    }
 }
 
 // 全域函數供 HTML 調用
 window.scrollToSection = function(sectionId) {
     if (window.mofanbicApp) {
         window.mofanbicApp.scrollToSection(sectionId);
+    }
+};
+
+// 全域主題切換函數
+window.setTheme = function(themeName) {
+    if (window.mofanbicApp) {
+        return window.mofanbicApp.setTheme(themeName);
+    }
+    return false;
+};
+
+window.getCurrentTheme = function() {
+    if (window.mofanbicApp) {
+        return window.mofanbicApp.getCurrentTheme();
+    }
+    return 'default';
+};
+
+window.setAutoTheme = function() {
+    if (window.mofanbicApp) {
+        window.mofanbicApp.setAutoTheme();
     }
 };
 

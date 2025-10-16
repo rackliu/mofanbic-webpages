@@ -6,6 +6,12 @@
 export class NotificationSystem {
     constructor() {
         this.activeNotifications = new Set();
+        console.log('🔧 通知系統初始化完成，檢查是否有 updateThemeStyles 方法...');
+
+        // 檢查是否缺少 updateThemeStyles 方法
+        if (typeof this.updateThemeStyles !== 'function') {
+            console.warn('⚠️ 通知系統缺少 updateThemeStyles 方法，這可能導致主題切換時出現錯誤');
+        }
     }
 
     /**
@@ -63,12 +69,20 @@ export class NotificationSystem {
      * @returns {string} CSS樣式字串
      */
     getNotificationStyles(type, options) {
-        const colors = {
+        // 預設顏色配置
+        const defaultColors = {
             success: { bg: '#10b981', icon: '✓' },
             error: { bg: '#ef4444', icon: '✕' },
             warning: { bg: '#f59e0b', icon: '⚠' },
             info: { bg: '#3b82f6', icon: 'ℹ' }
         };
+
+        // 如果有主題顏色配置，使用主題顏色
+        const colors = this.themeColors ? {
+            ...defaultColors,
+            success: { bg: this.themeColors.success, icon: '✓' },
+            info: { bg: this.themeColors.info, icon: 'ℹ' }
+        } : defaultColors;
 
         const position = options.position || 'top-right';
         const positionStyles = this.getPositionStyles(position);
@@ -368,5 +382,77 @@ export class NotificationSystem {
      */
     info(message, options = {}) {
         return this.show(message, 'info', 4000, options);
+    }
+
+    /**
+     * 更新主題樣式
+     * @param {Object} themeConfig - 主題配置物件
+     */
+    updateThemeStyles(themeConfig) {
+        console.log('🎨 更新通知系統主題樣式:', themeConfig);
+
+        if (!themeConfig || !themeConfig.colors) {
+            console.warn('⚠️ 主題配置無效，無法更新通知樣式');
+            return;
+        }
+
+        try {
+            // 更新現有的通知樣式
+            this.updateExistingNotifications(themeConfig);
+
+            // 更新預設顏色配置供未來通知使用
+            this.updateDefaultColors(themeConfig);
+
+            console.log('✅ 通知系統主題樣式更新完成');
+        } catch (error) {
+            console.error('❌ 更新通知主題樣式時發生錯誤:', error);
+        }
+    }
+
+    /**
+     * 更新現有通知的樣式
+     * @param {Object} themeConfig - 主題配置
+     */
+    updateExistingNotifications(themeConfig) {
+        const notifications = document.querySelectorAll('.notification');
+        const colors = themeConfig.colors;
+
+        notifications.forEach((notification, index) => {
+            const type = notification.getAttribute('data-type');
+
+            // 根據通知類型使用對應的主題顏色
+            const typeColors = {
+                success: colors.accent || colors.primary,
+                error: '#ef4444', // 錯誤通知保持紅色
+                warning: '#f59e0b', // 警告通知保持黃色
+                info: colors.primary
+            };
+
+            const newColor = typeColors[type] || colors.primary;
+
+            // 平滑過渡到新顏色
+            setTimeout(() => {
+                notification.style.background = newColor;
+                notification.style.borderColor = newColor + '33'; // 添加透明度
+            }, index * 50); // 錯開動畫時間避免閃爍
+        });
+    }
+
+    /**
+     * 更新預設顏色配置
+     * @param {Object} themeConfig - 主題配置
+     */
+    updateDefaultColors(themeConfig) {
+        const colors = themeConfig.colors;
+
+        // 儲存主題顏色供未來通知使用
+        this.themeColors = {
+            success: colors.accent || colors.primary,
+            error: '#ef4444',
+            warning: '#f59e0b',
+            info: colors.primary
+        };
+
+        console.log('🎨 已更新通知系統預設顏色配置');
     }
 }

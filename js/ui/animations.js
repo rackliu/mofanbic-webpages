@@ -1,9 +1,41 @@
 /**
  * 動畫和視覺效果模組
  * 處理滾動動畫、視差效果、交互動畫等
+ * 包含主題特定的動畫配置
  */
 
 import { Helpers } from '../utils/helpers.js';
+
+/**
+ * 主題動畫配置
+ */
+export const themeAnimations = {
+    'mid-autumn': {
+        name: '中秋主題動畫',
+        animations: [
+            { name: 'rabbitHop', duration: '4s', description: '玉兔跳躍動畫' },
+            { name: 'cloudDrift', duration: '5s', description: '雲層漂浮動畫' },
+            { name: 'moonGlow', duration: '3s', description: '月亮微光閃爍' },
+            { name: 'lanternFloat', duration: '4s', description: '燈籠漂浮動畫' }
+        ]
+    },
+    'christmas': {
+        name: '聖誕主題動畫',
+        animations: [
+            { name: 'snowfall', duration: '8s', description: '雪花飄落動畫' },
+            { name: 'twinkle', duration: '2s', description: '聖誕燈串微閃' },
+            { name: 'shine', duration: '3s', description: '聖誕球反光效果' }
+        ]
+    },
+    'lunar-new-year': {
+        name: '農曆新年主題動畫',
+        animations: [
+            { name: 'fireworkExplode', duration: '1.5s', description: '鞭炮煙火動畫' },
+            { name: 'curtainOpen', duration: '2s', description: '紅包門簾開場' },
+            { name: 'scrollUnroll', duration: '2s', description: '春聯捲軸展開' }
+        ]
+    }
+};
 
 export class AnimationSystem {
     constructor() {
@@ -72,7 +104,11 @@ export class AnimationSystem {
      * @param {number} ratio - 交集比例
      */
     triggerAnimation(target, ratio) {
-        if (target.classList.contains('animated')) return;
+        // 重置動畫以確保每次都能觸發
+        target.classList.remove('animated');
+        target.style.animation = 'none';
+        // 强制浏览器重新计算样式
+        void target.offsetWidth;
 
         // 為不同類型的元素添加不同的動畫
         if (target.classList.contains('service-card')) {
@@ -97,7 +133,7 @@ export class AnimationSystem {
         const index = Array.from(cards).indexOf(card);
         
         card.style.animationDelay = `${index * 0.15}s`;
-        card.style.animation = 'fadeInUp 0.6s ease-out forwards';
+        card.classList.add('animated');
         
         // 圖示特殊動畫
         const icon = card.querySelector('.service-icon');
@@ -119,7 +155,9 @@ export class AnimationSystem {
             this.animateCounter(numberElement, 0, finalNumber, 1500);
         }
         
-        statItem.style.animation = 'scaleIn 0.8s ease-out forwards';
+        statItem.classList.add('animated');
+        // 强制使用 scaleIn 动画
+        statItem.style.animationName = 'scaleIn';
     }
 
     /**
@@ -131,7 +169,9 @@ export class AnimationSystem {
         const index = Array.from(cards).indexOf(card);
         
         card.style.animationDelay = `${index * 0.1}s`;
-        card.style.animation = 'slideInUp 0.5s ease-out forwards';
+        card.classList.add('animated');
+        // 强制使用 slideInUp 动画
+        card.style.animationName = 'slideInUp';
     }
 
     /**
@@ -139,7 +179,7 @@ export class AnimationSystem {
      * @param {HTMLElement} element - 元素
      */
     animateDefault(element) {
-        element.style.animation = 'fadeInUp 0.6s ease-out forwards';
+        element.classList.add('animated');
     }
 
     /**
@@ -383,6 +423,31 @@ export class AnimationSystem {
         const style = document.createElement('style');
         style.id = 'animation-styles';
         style.textContent = `
+            @keyframes tada {
+                from {
+                    transform: scale3d(1, 1, 1);
+                }
+                10%, 20% {
+                    transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -3deg);
+                }
+                30%, 50%, 70%, 90% {
+                    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 3deg);
+                }
+                40%, 60%, 80% {
+                    transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, -3deg);
+                }
+                to {
+                    transform: scale3d(1, 1, 1);
+                }
+            }
+            @keyframes gentle-swing {
+                0%, 100% {
+                    transform: rotate(0);
+                }
+                50% {
+                    transform: rotate(2deg);
+                }
+            }
             @keyframes fadeInUp {
                 from {
                     opacity: 0;
@@ -437,6 +502,13 @@ export class AnimationSystem {
             .animate-on-scroll {
                 opacity: 0;
             }
+
+            .animated {
+                animation-name: var(--animation-name, fadeInUp);
+                animation-duration: var(--animation-duration, 0.6s);
+                animation-timing-function: var(--animation-easing, ease-out);
+                animation-fill-mode: forwards;
+            }
             
             .animations-paused * {
                 animation-play-state: paused !important;
@@ -453,6 +525,35 @@ export class AnimationSystem {
         const instance = new AnimationSystem();
         instance.addAnimationStyles();
         return instance;
+    }
+
+    /**
+     * 更新主題樣式
+     * @param {object} themeConfig - 主題配置
+     */
+    updateThemeStyles(themeConfig) {
+        if (!themeConfig || !themeConfig.colors) return;
+
+        const root = document.documentElement;
+
+        // 更新動畫風格
+        const animationStyle = themeConfig.animations?.animationStyle || 'fadeInUp';
+        root.style.setProperty('--animation-name', animationStyle);
+
+        console.log('🎨 AnimationSystem: 正在更新主題樣式...', {
+            colors: themeConfig.colors,
+            animationStyle: animationStyle
+        });
+
+        // 更新返回頂部按鈕的顏色
+        const backToTopBtn = document.getElementById('backToTop');
+        if (backToTopBtn) {
+            backToTopBtn.style.setProperty('--button-bg-color', themeConfig.colors.primary);
+            backToTopBtn.style.setProperty('--button-hover-bg-color', themeConfig.colors.roseGoldDark);
+        }
+
+        // 可選：更新其他動畫相關的顏色
+        root.style.setProperty('--animation-accent-color', themeConfig.colors.accent);
     }
 
     /**
