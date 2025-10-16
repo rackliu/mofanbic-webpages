@@ -58,6 +58,7 @@ export class AnimationSystem {
      * 初始化滾動觀察器
      */
     initScrollObserver() {
+        console.log('🔍 AnimationSystem: 初始化滾動觀察器...');
         const observerOptions = {
             threshold: [0.1, 0.3, 0.5],
             rootMargin: '0px 0px -50px 0px'
@@ -66,6 +67,7 @@ export class AnimationSystem {
         this.observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !this.isAnimationsPaused) {
+                    console.log('👁️ AnimationSystem: 元素進入視窗', entry.target.className);
                     this.triggerAnimation(entry.target, entry.intersectionRatio);
                 }
             });
@@ -79,23 +81,22 @@ export class AnimationSystem {
      * 觀察需要動畫的元素
      */
     observeAnimatedElements() {
+        // 只觀察統計項目，其他元素不添加動畫避免破壞版型
         const selectors = [
-            '.service-card',
-            '.contact-card', 
-            '.transport-card', 
-            '.stat-item', 
-            '.announcement-card',
-            '.brand-description',
-            '.form-card'
+            '.stat-item'  // 只啟用統計項目的動畫
         ];
 
+        let totalElements = 0;
         selectors.forEach(selector => {
             const elements = document.querySelectorAll(selector);
+            console.log(`🎯 AnimationSystem: 找到 ${elements.length} 個 ${selector} 元素`);
             elements.forEach(el => {
                 el.classList.add('animate-on-scroll');
                 this.observer.observe(el);
+                totalElements++;
             });
         });
+        console.log(`✅ AnimationSystem: 總共觀察 ${totalElements} 個元素（僅統計項目）`);
     }
 
     /**
@@ -104,24 +105,31 @@ export class AnimationSystem {
      * @param {number} ratio - 交集比例
      */
     triggerAnimation(target, ratio) {
-        // 重置動畫以確保每次都能觸發
-        target.classList.remove('animated');
-        target.style.animation = 'none';
-        // 强制浏览器重新计算样式
-        void target.offsetWidth;
+        // 如果已經動畫過，不要重複觸發
+        if (target.classList.contains('animated')) {
+            console.log('⏭️ AnimationSystem: 元素已動畫過，跳過', target.className);
+            return;
+        }
+        
+        console.log('🎬 AnimationSystem: 觸發動畫', target.className);
 
         // 為不同類型的元素添加不同的動畫
         if (target.classList.contains('service-card')) {
+            console.log('  → 服務卡片動畫');
             this.animateServiceCard(target);
         } else if (target.classList.contains('stat-item')) {
+            console.log('  → 統計項目動畫');
             this.animateStatItem(target);
         } else if (target.classList.contains('contact-card')) {
+            console.log('  → 聯繫卡片動畫');
             this.animateContactCard(target);
         } else {
+            console.log('  → 預設動畫');
             this.animateDefault(target);
         }
 
         target.classList.add('animated');
+        console.log('✅ AnimationSystem: 動畫類別已添加');
     }
 
     /**
@@ -149,15 +157,28 @@ export class AnimationSystem {
      * @param {HTMLElement} statItem - 統計項目
      */
     animateStatItem(statItem) {
+        // 檢查是否已經計數過
+        if (statItem.dataset.counted === 'true') {
+            console.log('  ⏭️ 統計項目已計數過，跳過');
+            return;
+        }
+        
         const numberElement = statItem.querySelector('.stat-number');
         if (numberElement) {
-            const finalNumber = parseInt(numberElement.textContent);
-            this.animateCounter(numberElement, 0, finalNumber, 1500);
+            const originalText = numberElement.textContent;
+            const hasPlus = originalText.includes('+');
+            const finalNumber = parseInt(originalText.replace('+', ''));
+            
+            console.log(`  📊 開始計數: ${originalText} (目標: ${finalNumber}${hasPlus ? '+' : ''})`);
+            
+            if (!isNaN(finalNumber)) {
+                this.animateCounter(numberElement, 0, finalNumber, 1500, hasPlus);
+                // 標記為已計數
+                statItem.dataset.counted = 'true';
+            }
         }
         
         statItem.classList.add('animated');
-        // 强制使用 scaleIn 动画
-        statItem.style.animationName = 'scaleIn';
     }
 
     /**
@@ -189,7 +210,7 @@ export class AnimationSystem {
      * @param {number} end - 結束值
      * @param {number} duration - 持續時間
      */
-    animateCounter(element, start, end, duration) {
+    animateCounter(element, start, end, duration, hasPlus = false) {
         const startTime = performance.now();
         const isNumber = !isNaN(end);
         
@@ -202,13 +223,13 @@ export class AnimationSystem {
             const current = start + (end - start) * easeOutCubic;
             
             if (isNumber) {
-                element.textContent = Math.floor(current) + (element.textContent.includes('+') ? '+' : '');
+                element.textContent = Math.floor(current) + (hasPlus ? '+' : '');
             }
             
             if (progress < 1) {
                 requestAnimationFrame(animate);
             } else {
-                element.textContent = element.textContent.replace(/\d+/, end);
+                element.textContent = end + (hasPlus ? '+' : '');
             }
         };
         
@@ -399,9 +420,35 @@ export class AnimationSystem {
     /**
      * 重新計算動畫
      */
+    /**
+     * 觸發初始可見元素的動畫
+     */
+    triggerInitialAnimations() {
+        console.log('🚀 AnimationSystem: 檢查初始可見的統計項目...');
+        const animatedElements = document.querySelectorAll('.stat-item.animate-on-scroll');
+        let triggeredCount = 0;
+        
+        animatedElements.forEach(el => {
+            const rect = el.getBoundingClientRect();
+            const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+            
+            if (isVisible && !el.classList.contains('animated')) {
+                console.log('  → 觸發統計項目動畫:', el.className);
+                this.triggerAnimation(el, 0.3);
+                triggeredCount++;
+            }
+        });
+        
+        console.log(`✅ AnimationSystem: 已觸發 ${triggeredCount} 個統計項目的動畫`);
+    }
+
+    /**
+     * 重新計算動畫
+     */
     recalculateAnimations() {
         if (!this.observer) return;
 
+        console.log('🔄 AnimationSystem: 重新計算動畫...');
         // 重新觀察所有動畫元素
         const animatedElements = document.querySelectorAll('.animate-on-scroll');
         animatedElements.forEach(el => {
@@ -418,8 +465,12 @@ export class AnimationSystem {
      * 添加 CSS 動畫類別
      */
     addAnimationStyles() {
-        if (document.getElementById('animation-styles')) return;
+        if (document.getElementById('animation-styles')) {
+            console.log('⚠️ AnimationSystem: 動畫樣式已存在，跳過注入');
+            return;
+        }
 
+        console.log('💉 AnimationSystem: 注入基本動畫樣式（不影響版型）...');
         const style = document.createElement('style');
         style.id = 'animation-styles';
         style.textContent = `
@@ -499,15 +550,13 @@ export class AnimationSystem {
                 }
             }
             
+            /* 完全禁用動畫樣式，保持所有元素正常顯示 */
             .animate-on-scroll {
-                opacity: 0;
+                /* 不設定任何樣式，保持原始顯示 */
             }
 
             .animated {
-                animation-name: var(--animation-name, fadeInUp);
-                animation-duration: var(--animation-duration, 0.6s);
-                animation-timing-function: var(--animation-easing, ease-out);
-                animation-fill-mode: forwards;
+                /* 不設定任何樣式，保持原始顯示 */
             }
             
             .animations-paused * {
@@ -522,8 +571,16 @@ export class AnimationSystem {
      * 初始化時添加動畫樣式
      */
     static init() {
+        console.log('🎬 AnimationSystem: 開始初始化...');
         const instance = new AnimationSystem();
         instance.addAnimationStyles();
+        console.log('✅ AnimationSystem: 初始化完成，動畫樣式已注入');
+        
+        // 延遲觸發初始可見元素的動畫，確保 DOM 和樣式都已就緒
+        setTimeout(() => {
+            instance.triggerInitialAnimations();
+        }, 300);
+        
         return instance;
     }
 

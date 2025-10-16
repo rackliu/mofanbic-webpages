@@ -577,7 +577,7 @@ export class ThemeConfig {
     addScrollAnimation() {
         const scroll = document.createElement('div');
         scroll.className = 'scroll-decoration';
-        scroll.innerHTML = '春聯';
+        scroll.innerHTML = '新年快樂，合家平安'; // 吉祥如意賀新歲，迎春接福喜臨門
         scroll.style.cssText = `
             position: fixed;
             top: 50%;

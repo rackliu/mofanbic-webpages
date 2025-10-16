@@ -2134,7 +2134,7 @@ textarea.form-control {
   }
 }
 
-/* 動畫效果 */
+/* 動畫效果 - 基礎定義 */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -2146,16 +2146,8 @@ textarea.form-control {
   }
 }
 
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.6s ease;
-}
-
-.animate-on-scroll.animated {
-  opacity: 1;
-  transform: translateY(0);
-}
+/* 注意：詳細的動畫樣式由 AnimationSystem 動態注入 */
+/* 這裡只保留基礎定義以避免衝突 */
 
 /* 平滑滾動增強 */
 html {

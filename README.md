@@ -122,6 +122,88 @@ mofanbic_webpages/
 
 ## 🔧 開發工具
 
+### 主題系統 API
+開發環境下可透過全域函數控制主題：
+
+```javascript
+// 在瀏覽器控制台輸入
+window.setTheme('mid-autumn');      // 中秋主題
+window.setTheme('christmas');       // 聖誕主題
+window.setTheme('lunar-new-year');  // 新年主題
+window.setTheme('default');         // 預設主題
+
+window.getCurrentTheme();           // 取得當前主題
+window.getAvailableThemes();        // 取得所有可用主題
+window.getThemeConfig();            // 取得完整主題配置
+
+window.setAutoTheme();              // 根據月份自動選擇主題
+```
+
+### 主題設定檔案
+- **修改預設主題**: 編輯 `js/core/theme-settings.js` 的 `DEFAULT_SETTINGS.currentTheme`
+- **自訂主題配置**: 編輯 `js/core/theme-config.js` 中的 `THEME_CONFIGS` 物件
+- **啟用自動切換**: 將 `js/core/theme-settings.js` 中 `autoTheme` 改為 `true`
+
+### 自動主題月份對應邏輯
+
+自動主題根據當前月份自動選擇對應的節日主題，程式邏輯分佈在三個檔案：
+
+#### 1. **核心月份判斷邏輯** - `js/core/theme-config.js`
+
+```javascript
+static getAutoTheme() {
+    const month = new Date().getMonth() + 1;
+    if (month === 9) {
+        return 'mid-autumn';      // 9月 → 中秋主題
+    } else if (month === 12) {
+        return 'christmas';       // 12月 → 聖誕主題
+    } else if (month === 1 || month === 2) {
+        return 'lunar-new-year';  // 1-2月 → 新年主題
+    }
+    return 'default';             // 其他月份 → 預設主題
+}
+```
+> 修改月份對應：編輯此方法中的月份判斷條件
+
+#### 2. **自動主題開關設定** - `js/core/theme-settings.js`
+
+```javascript
+const DEFAULT_SETTINGS = {
+    currentTheme: 'default',
+    autoTheme: false,           // ← 改為 true 啟用自動主題
+    rememberTheme: true,
+    showIndicator: true
+};
+```
+> 啟用自動主題：將 `autoTheme` 改為 `true`
+
+#### 3. **初始化調用** - `js/core/app.js`
+
+```javascript
+initializeThemeSystem() {
+    const settings = ThemeSettings.loadSettings();
+    if (settings.autoTheme) {
+        // 如果啟用自動主題，就調用 getAutoTheme()
+        const autoTheme = ThemeConfig.getAutoTheme();
+        this.setTheme(autoTheme);
+    } else {
+        // 否則使用保存的主題
+        this.setTheme(settings.currentTheme);
+    }
+}
+```
+
+**月份對應表：**
+
+| 月份 | 主題 | 檔案位置 |
+|------|------|---------|
+| 1-2月 | `lunar-new-year` | js/core/theme-config.js |
+| 9月 | `mid-autumn` | js/core/theme-config.js |
+| 12月 | `christmas` | js/core/theme-config.js |
+| 其他月份 | `default` | js/core/theme-config.js |
+
+---
+
 ### 除錯模式
 開發環境下可使用內建除錯工具：
 
