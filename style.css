@@ -2305,19 +2305,37 @@ html {
   }
 }
 
-/* 玉兔跳躍動畫 */
+/* 玉兔跳躍動畫 - 優化邊界，防止超出視窗 */
 @keyframes rabbitHop {
   0%, 100% {
     transform: translateY(0) translateX(0);
   }
   25% {
-    transform: translateY(-20px) translateX(10px);
+    transform: translateY(-20px) translateX(8px);
   }
   50% {
-    transform: translateY(0) translateX(20px);
+    transform: translateY(0) translateX(15px);
   }
   75% {
-    transform: translateY(-15px) translateX(30px);
+    transform: translateY(-15px) translateX(20px);
+  }
+}
+
+/* 手機版優化 - 更小的移動幅度 */
+@media (max-width: 480px) {
+  @keyframes rabbitHop {
+    0%, 100% {
+      transform: translateY(0) translateX(0);
+    }
+    25% {
+      transform: translateY(-15px) translateX(5px);
+    }
+    50% {
+      transform: translateY(0) translateX(10px);
+    }
+    75% {
+      transform: translateY(-12px) translateX(12px);
+    }
   }
 }
 

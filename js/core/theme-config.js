@@ -485,24 +485,51 @@ export class ThemeConfig {
      * 添加玉兔跳躍動畫
      */
     addRabbitAnimation() {
+        const container = document.getElementById('festival-theme-settings');
+        if (!container) return;
+
+        // 先移除舊的兔子元素，防止 DOM 堆積
+        const oldRabbit = container.querySelector('.rabbit-decoration');
+        if (oldRabbit) {
+            oldRabbit.remove();
+        }
+
+        // 計算響應式位置
+        const viewportHeight = window.innerHeight;
+        const viewportWidth = window.innerWidth;
+        
+        // 根據螢幕尺寸調整位置
+        let bottomPos = '20%';
+        let leftPos = '5%';
+        let fontSize = '50px';
+        
+        if (viewportWidth <= 480) {
+            // 手機
+            bottomPos = '15%';
+            leftPos = '3%';
+            fontSize = '35px';
+        } else if (viewportWidth <= 768) {
+            // 平板
+            bottomPos = '18%';
+            leftPos = '4%';
+            fontSize = '42px';
+        }
+
         const rabbit = document.createElement('div');
         rabbit.className = 'rabbit-decoration';
         rabbit.innerHTML = '🐰';
         rabbit.style.cssText = `
             position: fixed;
-            bottom: 20%;
-            left: 5%;
-            font-size: 50px;
+            bottom: ${bottomPos};
+            left: ${leftPos};
+            font-size: ${fontSize};
             opacity: 0.6;
-            z-index: 1;
+            z-index: 10;
             animation: rabbitHop 4s ease-in-out infinite;
             pointer-events: none;
         `;
 
-        const container = document.getElementById('festival-theme-settings');
-        if (container) {
-            container.appendChild(rabbit);
-        }
+        container.appendChild(rabbit);
     }
 
     /**
