@@ -30,7 +30,7 @@ export class ThemeConfig {
             // 根據月份決定自動主題
             let autoTheme = 'default';
             if (month === 9 || month === 10) {
-                autoTheme = 'mid-autumn';
+                autoTheme = 'mid-autumn';// mid-autumn
             } else if (month === 12) {
                 autoTheme = 'christmas';
             } else if (month === 1 || month === 2) {
@@ -432,7 +432,7 @@ export class ThemeConfig {
     }
 
     /**
-     * 添加煙火效果
+     * 添加鞭炮效果
      */
     addFireworkEffect() {
         // 清除之前的計時器（如果存在）
@@ -440,59 +440,77 @@ export class ThemeConfig {
             clearInterval(this.fireworkInterval);
         }
 
-        // 設定新的煙火計時器
+        // 設定新的鞭炮計時器 - 降低觸發頻率
         this.fireworkInterval = setInterval(() => {
-            if (Math.random() < 0.3) { // 30% 機率觸發
-                this.createFirework();
+            if (Math.random() < 0.25) { // 25% 機率觸發
+                this.createFirecracker();
             }
-        }, 3000);
+        }, 4000); // 每4秒檢查一次
 
-        // 立即創建一個煙火作為測試
-        setTimeout(() => this.createFirework(), 500);
+        // 立即創建一個鞭炮作為測試
+        setTimeout(() => this.createFirecracker(), 800);
     }
 
     /**
-     * 建立煙火動畫
+     * 建立鞭炮動畫（CSS 繪製）
      */
-    createFirework() {
+    createFirecracker() {
         const container = document.getElementById('festival-theme-settings');
         if (!container) {
-            console.warn('找不到煙火容器元素');
+            console.warn('找不到鞭炮容器元素');
             return;
         }
 
-        const firework = document.createElement('div');
-        firework.className = 'firework';
+        const firecracker = document.createElement('div');
+        firecracker.className = 'firecracker';
         
         // 隨機位置
-        const top = Math.random() * 60 + 20; // 20%-80%
-        const left = Math.random() * 80 + 10; // 10%-90%
+        const top = Math.random() * 50 + 25; // 25%-75%
+        const left = Math.random() * 70 + 15; // 15%-85%
         
-        firework.style.cssText = `
+        // 隨機顏色（紅色系）
+        const colors = ['#FF4444', '#FF6B6B', '#FF8888', '#FF3333', '#CC0000'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        
+        firecracker.style.cssText = `
             position: fixed;
             top: ${top}%;
             left: ${left}%;
-            width: 8px;
-            height: 8px;
-            background: ${this.getThemeConfig().colors.accent};
-            border-radius: 50%;
+            width: 60px;
+            height: 60px;
             pointer-events: none;
             z-index: 100;
-            font-size: 0;
+            animation: firecrackerExplode 2s ease-out forwards;
         `;
 
-        container.appendChild(firework);
+        // CSS 繪製鞭炮爆炸效果
+        firecracker.innerHTML = `
+            <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; height: 100%;">
+                <!-- 中心爆炸點 -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 12px; height: 12px; background: ${color}; border-radius: 50%; box-shadow: 0 0 20px ${color}, 0 0 40px ${color};"></div>
+                <!-- 爆炸光芒 - 8個方向 -->
+                <div style="position: absolute; top: 50%; left: 50%; width: 30px; height: 3px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); transform: translate(-50%, -50%) rotate(0deg); border-radius: 2px;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; width: 30px; height: 3px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); transform: translate(-50%, -50%) rotate(45deg); border-radius: 2px;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; width: 30px; height: 3px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); transform: translate(-50%, -50%) rotate(90deg); border-radius: 2px;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; width: 30px; height: 3px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); transform: translate(-50%, -50%) rotate(135deg); border-radius: 2px;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; width: 30px; height: 3px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); transform: translate(-50%, -50%) rotate(180deg); border-radius: 2px;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; width: 30px; height: 3px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); transform: translate(-50%, -50%) rotate(225deg); border-radius: 2px;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; width: 30px; height: 3px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); transform: translate(-50%, -50%) rotate(270deg); border-radius: 2px;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; width: 30px; height: 3px; background: linear-gradient(90deg, ${color} 0%, transparent 100%); transform: translate(-50%, -50%) rotate(315deg); border-radius: 2px;"></div>
+                <!-- 金色火花點 -->
+                <div style="position: absolute; top: 20%; left: 20%; width: 4px; height: 4px; background: #FFD700; border-radius: 50%; box-shadow: 0 0 8px #FFD700;"></div>
+                <div style="position: absolute; top: 20%; right: 20%; width: 4px; height: 4px; background: #FFD700; border-radius: 50%; box-shadow: 0 0 8px #FFD700;"></div>
+                <div style="position: absolute; bottom: 20%; left: 20%; width: 4px; height: 4px; background: #FFD700; border-radius: 50%; box-shadow: 0 0 8px #FFD700;"></div>
+                <div style="position: absolute; bottom: 20%; right: 20%; width: 4px; height: 4px; background: #FFD700; border-radius: 50%; box-shadow: 0 0 8px #FFD700;"></div>
+            </div>
+        `;
 
-        // 煙火爆炸動畫
+        container.appendChild(firecracker);
+
+        // 2秒後移除元素
         setTimeout(() => {
-            firework.style.animation = 'fireworkExplode 1.5s ease-out forwards';
-            firework.style.fontSize = '32px';
-            firework.innerHTML = '🎆';
-
-            setTimeout(() => {
-                firework.remove();
-            }, 1500);
-        }, 100);
+            firecracker.remove();
+        }, 2000);
     }
 
     /**
@@ -520,7 +538,7 @@ export class ThemeConfig {
     }
 
     /**
-     * 添加玉兔跳躍動畫（使用 CSS 繪製，避免 emoji 跨平台差異）
+     * 添加玉兔跳躍動畫（使用 CSS 繪製擬真玉兔，避免 emoji 跨平台差異）
      */
     addRabbitAnimation() {
         const container = document.getElementById('festival-theme-settings');
@@ -556,37 +574,62 @@ export class ThemeConfig {
             position: fixed;
             bottom: ${bottomPos};
             left: ${leftPos};
-            width: ${50 * scale}px;
-            height: ${60 * scale}px;
-            opacity: 0.8;
+            width: ${60 * scale}px;
+            height: ${80 * scale}px;
+            opacity: 0.75;
             z-index: 10;
             animation: rabbitHop 4s ease-in-out infinite;
             pointer-events: none;
             transform: scale(${scale});
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.15));
         `;
 
-        // 使用 CSS 繪製玉兔（強調長耳朵）
+        // 使用 CSS 繪製擬真玉兔（強調修長的長耳朵和自然的體態）
         rabbit.innerHTML = `
-            <!-- 左耳 -->
-            <div style="position: absolute; bottom: 45px; left: 8px; width: 12px; height: 35px; background: white; border-radius: 6px 6px 0 0; border: 2px solid #E8B4B8; transform: rotate(-15deg);"></div>
-            <!-- 右耳 -->
-            <div style="position: absolute; bottom: 45px; right: 8px; width: 12px; height: 35px; background: white; border-radius: 6px 6px 0 0; border: 2px solid #E8B4B8; transform: rotate(15deg);"></div>
-            <!-- 耳朵內側 -->
-            <div style="position: absolute; bottom: 50px; left: 11px; width: 6px; height: 20px; background: #FFC0CB; border-radius: 3px; transform: rotate(-15deg);"></div>
-            <div style="position: absolute; bottom: 50px; right: 11px; width: 6px; height: 20px; background: #FFC0CB; border-radius: 3px; transform: rotate(15deg);"></div>
+            <!-- 左耳外層 -->
+            <div style="position: absolute; bottom: 55px; left: 12px; width: 10px; height: 42px; background: linear-gradient(to bottom, #f8f8f8 0%, #e8e8e8 100%); border-radius: 5px 5px 2px 2px; transform: rotate(-12deg); box-shadow: inset 0 -2px 3px rgba(0,0,0,0.05);"></div>
+            <!-- 右耳外層 -->
+            <div style="position: absolute; bottom: 55px; right: 12px; width: 10px; height: 42px; background: linear-gradient(to bottom, #f8f8f8 0%, #e8e8e8 100%); border-radius: 5px 5px 2px 2px; transform: rotate(12deg); box-shadow: inset 0 -2px 3px rgba(0,0,0,0.05);"></div>
+            <!-- 左耳內側 -->
+            <div style="position: absolute; bottom: 60px; left: 14px; width: 5px; height: 28px; background: linear-gradient(to bottom, #ffd5d5 0%, #ffb8b8 100%); border-radius: 2.5px; transform: rotate(-12deg);"></div>
+            <!-- 右耳內側 -->
+            <div style="position: absolute; bottom: 60px; right: 14px; width: 5px; height: 28px; background: linear-gradient(to bottom, #ffd5d5 0%, #ffb8b8 100%); border-radius: 2.5px; transform: rotate(12deg);"></div>
             <!-- 頭部 -->
-            <div style="position: absolute; bottom: 20px; left: 5px; width: 40px; height: 35px; background: white; border-radius: 50% 50% 45% 45%; border: 2px solid #E8B4B8;"></div>
-            <!-- 眼睛 -->
-            <div style="position: absolute; bottom: 35px; left: 15px; width: 4px; height: 4px; background: black; border-radius: 50%;"></div>
-            <div style="position: absolute; bottom: 35px; right: 15px; width: 4px; height: 4px; background: black; border-radius: 50%;"></div>
+            <div style="position: absolute; bottom: 30px; left: 8px; width: 44px; height: 36px; background: linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%); border-radius: 50% 50% 48% 48%; box-shadow: 0 2px 6px rgba(0,0,0,0.08);"></div>
+            <!-- 額頭亮點 -->
+            <div style="position: absolute; bottom: 52px; left: 22px; width: 12px; height: 8px; background: radial-gradient(ellipse, rgba(255,255,255,0.8) 0%, transparent 70%); border-radius: 50%;"></div>
+            <!-- 左眼 -->
+            <div style="position: absolute; bottom: 48px; left: 18px; width: 6px; height: 7px; background: #2a2a2a; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;"></div>
+            <!-- 右眼 -->
+            <div style="position: absolute; bottom: 48px; right: 16px; width: 6px; height: 7px; background: #2a2a2a; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;"></div>
+            <!-- 左眼高光 -->
+            <div style="position: absolute; bottom: 51px; left: 20px; width: 2px; height: 2px; background: white; border-radius: 50%;"></div>
+            <!-- 右眼高光 -->
+            <div style="position: absolute; bottom: 51px; right: 18px; width: 2px; height: 2px; background: white; border-radius: 50%;"></div>
             <!-- 鼻子 -->
-            <div style="position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); width: 3px; height: 3px; background: #FFB6C1; border-radius: 50%;"></div>
-            <!-- 嘴巴 -->
-            <div style="position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); width: 8px; height: 4px; border: 1px solid #FFB6C1; border-top: none; border-radius: 0 0 50% 50%;"></div>
+            <div style="position: absolute; bottom: 41px; left: 50%; transform: translateX(-50%); width: 4px; height: 4px; background: #ff9eaa; border-radius: 50% 50% 50% 0;"></div>
+            <!-- 嘴巴左 -->
+            <div style="position: absolute; bottom: 38px; left: 24px; width: 6px; height: 3px; border: 1.5px solid #ff9eaa; border-top: none; border-right: none; border-radius: 0 0 0 50%;"></div>
+            <!-- 嘴巴右 -->
+            <div style="position: absolute; bottom: 38px; right: 24px; width: 6px; height: 3px; border: 1.5px solid #ff9eaa; border-top: none; border-left: none; border-radius: 0 0 50% 0;"></div>
+            <!-- 鬍鬚左上 -->
+            <div style="position: absolute; bottom: 43px; left: 3px; width: 14px; height: 1px; background: rgba(100,100,100,0.3); transform: rotate(-5deg);"></div>
+            <!-- 鬍鬚左下 -->
+            <div style="position: absolute; bottom: 39px; left: 3px; width: 14px; height: 1px; background: rgba(100,100,100,0.3); transform: rotate(5deg);"></div>
+            <!-- 鬍鬚右上 -->
+            <div style="position: absolute; bottom: 43px; right: 3px; width: 14px; height: 1px; background: rgba(100,100,100,0.3); transform: rotate(5deg);"></div>
+            <!-- 鬍鬚右下 -->
+            <div style="position: absolute; bottom: 39px; right: 3px; width: 14px; height: 1px; background: rgba(100,100,100,0.3); transform: rotate(-5deg);"></div>
             <!-- 身體 -->
-            <div style="position: absolute; bottom: 0; left: 8px; width: 34px; height: 25px; background: white; border-radius: 40%; border: 2px solid #E8B4B8;"></div>
+            <div style="position: absolute; bottom: 2px; left: 10px; width: 40px; height: 32px; background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%); border-radius: 50% 50% 48% 48%; box-shadow: 0 3px 8px rgba(0,0,0,0.1);"></div>
+            <!-- 腹部白色區域 -->
+            <div style="position: absolute; bottom: 4px; left: 18px; width: 24px; height: 24px; background: radial-gradient(ellipse, rgba(255,255,255,0.6) 0%, transparent 70%); border-radius: 50%;"></div>
+            <!-- 左前腳 -->
+            <div style="position: absolute; bottom: 0; left: 16px; width: 10px; height: 12px; background: linear-gradient(to bottom, #f5f5f5 0%, #e8e8e8 100%); border-radius: 40% 40% 50% 50%;"></div>
+            <!-- 右前腳 -->
+            <div style="position: absolute; bottom: 0; left: 34px; width: 10px; height: 12px; background: linear-gradient(to bottom, #f5f5f5 0%, #e8e8e8 100%); border-radius: 40% 40% 50% 50%;"></div>
             <!-- 尾巴 -->
-            <div style="position: absolute; bottom: 8px; right: 3px; width: 8px; height: 8px; background: white; border-radius: 50%; border: 2px solid #E8B4B8;"></div>
+            <div style="position: absolute; bottom: 14px; right: 6px; width: 10px; height: 10px; background: radial-gradient(circle, #ffffff 0%, #e8e8e8 100%); border-radius: 50%; box-shadow: inset -1px -1px 2px rgba(0,0,0,0.05);"></div>
         `;
 
         container.appendChild(rabbit);
@@ -602,8 +645,8 @@ export class ThemeConfig {
         const cloudCount = 3;
         const cloudPositions = [
             { top: '10%', right: '10%' },
-            { top: '30%', right: '25%' },
-            { top: '50%', right: '40%' }
+            { top: '25%', right: '40%' },
+            { top: '40%', right: '25%' }
         ];
 
         cloudPositions.forEach((pos, i) => {
@@ -694,7 +737,7 @@ export class ThemeConfig {
     }
 
     /**
-     * 添加金幣灑落動畫
+     * 添加金幣灑落動畫（CSS 繪製，減慢速度和頻率）
      */
     addGoldCoinRain() {
         const container = document.getElementById('festival-theme-settings');
@@ -705,38 +748,50 @@ export class ThemeConfig {
             clearInterval(this.goldCoinInterval);
         }
 
-        // 每隔一段時間創建新的金幣
+        // 降低頻率：每5.5秒創建新的金幣
         this.goldCoinInterval = setInterval(() => {
             this.createGoldCoin(container);
-        }, 800);
+        }, 5500);
 
-        // 立即創建幾個金幣
-        for (let i = 0; i < 3; i++) {
-            setTimeout(() => this.createGoldCoin(container), i * 300);
+        // 初始只創建2個金幣，減少視覺混亂
+        for (let i = 0; i < 2; i++) {
+            setTimeout(() => this.createGoldCoin(container), i * 500);
         }
     }
 
     /**
-     * 創建金幣元素
+     * 創建金幣元素（CSS 繪製）
      */
     createGoldCoin(container) {
         const coin = document.createElement('div');
         coin.className = 'gold-coin';
-        coin.innerHTML = '💰';
         
-        const leftPos = Math.random() * 90 + 5; // 5%-95%
-        const duration = Math.random() * 2 + 3; // 3-5秒
-        const size = Math.random() * 10 + 20; // 20-30px
+        const leftPos = Math.random() * 80 + 10; // 10%-90%
+        const duration = Math.random() * 5 + 10; // 10-15秒（減慢速度）
+        const size = Math.random() * 8 + 24; // 24-32px
         
         coin.style.cssText = `
             position: fixed;
             top: -50px;
             left: ${leftPos}%;
-            font-size: ${size}px;
-            opacity: 0.8;
+            width: ${size}px;
+            height: ${size}px;
+            opacity: 0.85;
             z-index: 50;
             animation: coinFall ${duration}s linear forwards;
             pointer-events: none;
+        `;
+
+        // CSS 繪製金幣（圓形，金色漸層）
+        coin.innerHTML = `
+            <div style="position: relative; width: 100%; height: 100%;">
+                <!-- 金幣主體 -->
+                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 30%, #FFD700 0%, #FFA500 50%, #FF8C00 100%); border-radius: 50%; box-shadow: inset 0 -2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(255,215,0,0.5);"></div>
+                <!-- 金幣高光 -->
+                <div style="position: absolute; top: 15%; left: 20%; width: 40%; height: 30%; background: radial-gradient(ellipse, rgba(255,255,255,0.6) 0%, transparent 70%); border-radius: 50%;"></div>
+                <!-- 金幣符號 $ -->
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: ${size * 0.6}px; font-weight: bold; color: #8B4513; text-shadow: 0 1px 2px rgba(255,255,255,0.5);">$</div>
+            </div>
         `;
 
         container.appendChild(coin);
@@ -769,8 +824,8 @@ export class ThemeConfig {
         }
 
         // 移除動畫元素
-        const fireworks = document.querySelectorAll('.firework');
-        fireworks.forEach(fw => fw.remove());
+        const firecrackers = document.querySelectorAll('.firecracker');
+        firecrackers.forEach(fc => fc.remove());
         
         const coins = document.querySelectorAll('.gold-coin');
         coins.forEach(c => c.remove());
