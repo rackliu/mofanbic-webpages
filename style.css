@@ -2281,17 +2281,74 @@ html {
 
 @keyframes fireworkExplode {
   0% {
-    transform: scale(0);
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  25% {
+    transform: scale(1.2) rotate(90deg);
     opacity: 1;
   }
   50% {
-    transform: scale(1.5);
+    transform: scale(2) rotate(180deg);
+    opacity: 0.9;
+  }
+  75% {
+    transform: scale(1.5) rotate(270deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0.3) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* 煙火元素樣式 */
+.firework {
+  will-change: transform, opacity;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: font-size 0.1s ease;
+}
+
+/* 金幣灑落動畫 */
+@keyframes coinFall {
+  0% {
+    transform: translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
     opacity: 0.8;
   }
   100% {
-    transform: scale(0.5);
+    transform: translateY(calc(100vh + 50px)) rotate(720deg);
     opacity: 0;
   }
+}
+
+/* 金幣元素樣式 */
+.gold-coin {
+  will-change: transform, opacity;
+  filter: drop-shadow(0 2px 4px rgba(255, 215, 0, 0.5));
+}
+
+/* 燈籠搖晃動畫 */
+@keyframes lanternSwing {
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+}
+
+/* 燈籠元素樣式 */
+.swinging-lantern {
+  will-change: transform;
+  filter: drop-shadow(0 2px 6px rgba(197, 48, 48, 0.4));
 }
 
 @keyframes moonGlow {
@@ -2375,32 +2432,7 @@ html {
   }
 }
 
-/* 紅包門簾開場動畫 */
-@keyframes curtainOpen {
-  0% {
-    transform: scaleX(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scaleX(0);
-    opacity: 0;
-  }
-}
-
-/* 春聯捲軸展開動畫 */
-@keyframes scrollUnroll {
-  0% {
-    transform: scaleY(0) rotateX(90deg);
-    opacity: 0;
-  }
-  50% {
-    opacity: 0.8;
-  }
-  100% {
-    transform: scaleY(1) rotateX(0deg);
-    opacity: 1;
-  }
-}
+/* 已移除紅包門簾和春聯捲軸動畫（改用金幣灑落和燈籠搖晃） */
 
 /* 主題過渡動畫 */
 body.theme-transitioning * {

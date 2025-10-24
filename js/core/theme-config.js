@@ -203,11 +203,10 @@ export class ThemeConfig {
                 },
                 elements: {
                     showDecorations: true,
-                    decorationOpacity: 0.18,
+                    decorationOpacity: 0.85,
                     decorationType: 'lanterns',
                     fireworkEffect: true,
-                    curtainAnimation: true,
-                    scrollAnimation: true
+                    goldCoinRain: true
                 }
             }
         };
@@ -308,6 +307,9 @@ export class ThemeConfig {
         if (config.elements.fireworkEffect) {
             this.addFireworkEffect();
         }
+        if (config.elements.goldCoinRain) {
+            this.addGoldCoinRain();
+        }
         if (config.elements.moonPhase) {
             this.addMoonEffect();
         }
@@ -323,45 +325,59 @@ export class ThemeConfig {
         if (config.elements.ballShineAnimation) {
             this.addBallShineAnimation();
         }
-        if (config.elements.curtainAnimation) {
-            this.addCurtainAnimation();
-        }
-        if (config.elements.scrollAnimation) {
-            this.addScrollAnimation();
-        }
     }
 
     /**
      * 建立燈籠裝飾
      */
     createLanternDecorations(container, config) {
-        const lanternCount = 6;
-        for (let i = 0; i < lanternCount; i++) {
+        // 吉祥字陣列，輪流顯示
+        const blessings = ['福', '發', '財', '春', '喜', '吉'];
+        
+        const positions = [
+            { top: '10%', left: '10%' },
+            { top: '10%', left: '90%' },
+            { top: '30%', left: '5%' },
+            { top: '30%', left: '95%' },
+            { top: '50%', left: '8%' },
+            { top: '50%', left: '92%' }
+        ];
+
+        positions.forEach((pos, i) => {
             const lantern = document.createElement('div');
             lantern.className = 'decoration-lantern';
+            
+            // 扁圓形燈籠造型（寬 > 高）
+            const width = 55;
+            const height = 40;
+            
             lantern.style.cssText = `
                 position: fixed;
-                top: ${Math.random() * 60 + 20}%;
-                left: ${Math.random() * 90 + 5}%;
-                width: 40px;
-                height: 60px;
-                background: ${config.colors.accent};
-                border-radius: 20px 20px 5px 5px;
+                top: ${pos.top};
+                left: ${pos.left};
+                width: ${width}px;
+                height: ${height}px;
+                background: linear-gradient(135deg, ${config.colors.accent} 0%, ${config.colors.roseGold} 100%);
+                border-radius: 50%;
                 opacity: ${config.elements.decorationOpacity};
-                z-index: 1;
-                animation: lanternFloat 4s ease-in-out infinite;
-                animation-delay: ${i * 0.5}s;
+                z-index: 10;
+                transform-origin: top center;
+                animation: lanternSwing ${3 + i * 0.3}s ease-in-out infinite;
+                animation-delay: ${i * 0.2}s;
                 pointer-events: none;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             `;
 
-            // 添加燈籠內容
+            // 添加燈籠裝飾細節（吊繩、底部流蘇、吉祥字）
             lantern.innerHTML = `
-                <div style="position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 30px; height: 8px; background: ${config.colors.roseGoldDark}; border-radius: 4px;"></div>
-                <div style="position: absolute; bottom: 5px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: ${config.colors.roseGold}; border-radius: 50%;"></div>
+                <div style="position: absolute; top: -8px; left: 50%; transform: translateX(-50%); width: 2px; height: 8px; background: ${config.colors.roseGoldDark};"></div>
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 6px; height: 6px; background: ${config.colors.gold || config.colors.roseGoldDark}; border-radius: 50%;"></div>
+                <div style="position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%); width: 12px; height: 8px; background: ${config.colors.gold || config.colors.accent}; border-radius: 0 0 6px 6px;"></div>
+                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 14px; font-weight: bold; color: ${config.colors.gold || '#FFD700'};">${blessings[i]}</div>
             `;
 
             container.appendChild(lantern);
-        }
+        });
     }
 
     /**
@@ -419,37 +435,59 @@ export class ThemeConfig {
      * 添加煙火效果
      */
     addFireworkEffect() {
-        setInterval(() => {
+        // 清除之前的計時器（如果存在）
+        if (this.fireworkInterval) {
+            clearInterval(this.fireworkInterval);
+        }
+
+        // 設定新的煙火計時器
+        this.fireworkInterval = setInterval(() => {
             if (Math.random() < 0.3) { // 30% 機率觸發
                 this.createFirework();
             }
         }, 3000);
+
+        // 立即創建一個煙火作為測試
+        setTimeout(() => this.createFirework(), 500);
     }
 
     /**
      * 建立煙火動畫
      */
     createFirework() {
+        const container = document.getElementById('festival-theme-settings');
+        if (!container) {
+            console.warn('找不到煙火容器元素');
+            return;
+        }
+
         const firework = document.createElement('div');
         firework.className = 'firework';
+        
+        // 隨機位置
+        const top = Math.random() * 60 + 20; // 20%-80%
+        const left = Math.random() * 80 + 10; // 10%-90%
+        
         firework.style.cssText = `
             position: fixed;
-            top: ${Math.random() * 60 + 20}%;
-            left: ${Math.random() * 80 + 10}%;
-            width: 4px;
-            height: 4px;
+            top: ${top}%;
+            left: ${left}%;
+            width: 8px;
+            height: 8px;
             background: ${this.getThemeConfig().colors.accent};
             border-radius: 50%;
             pointer-events: none;
-            z-index: 1000;
+            z-index: 100;
+            font-size: 0;
         `;
 
-        document.body.appendChild(firework);
+        container.appendChild(firework);
 
         // 煙火爆炸動畫
         setTimeout(() => {
             firework.style.animation = 'fireworkExplode 1.5s ease-out forwards';
-            firework.innerHTML = '✨';
+            firework.style.fontSize = '32px';
+            firework.innerHTML = '🎆';
 
             setTimeout(() => {
                 firework.remove();
@@ -617,58 +655,60 @@ export class ThemeConfig {
     }
 
     /**
-     * 添加紅包門簾開場動畫
+     * 添加金幣灑落動畫
      */
-    addCurtainAnimation() {
-        const curtain = document.createElement('div');
-        curtain.className = 'curtain-decoration';
-        curtain.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, #C53030 0%, #9C1A1C 50%, #C53030 100%);
-            z-index: 999;
-            animation: curtainOpen 2s ease-in-out forwards;
-            pointer-events: none;
-        `;
+    addGoldCoinRain() {
+        const container = document.getElementById('festival-theme-settings');
+        if (!container) return;
 
-        document.body.appendChild(curtain);
+        // 清除之前的計時器
+        if (this.goldCoinInterval) {
+            clearInterval(this.goldCoinInterval);
+        }
 
-        setTimeout(() => {
-            curtain.remove();
-        }, 2000);
+        // 每隔一段時間創建新的金幣
+        this.goldCoinInterval = setInterval(() => {
+            this.createGoldCoin(container);
+        }, 800);
+
+        // 立即創建幾個金幣
+        for (let i = 0; i < 3; i++) {
+            setTimeout(() => this.createGoldCoin(container), i * 300);
+        }
     }
 
     /**
-     * 添加春聯捲軸展開動畫
+     * 創建金幣元素
      */
-    addScrollAnimation() {
-        const scroll = document.createElement('div');
-        scroll.className = 'scroll-decoration';
-        scroll.innerHTML = ''; // 吉祥如意賀新歲，迎春接福喜臨門
-        scroll.style.cssText = `
+    createGoldCoin(container) {
+        const coin = document.createElement('div');
+        coin.className = 'gold-coin';
+        coin.innerHTML = '💰';
+        
+        const leftPos = Math.random() * 90 + 5; // 5%-95%
+        const duration = Math.random() * 2 + 3; // 3-5秒
+        const size = Math.random() * 10 + 20; // 20-30px
+        
+        coin.style.cssText = `
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 48px;
-            font-weight: bold;
-            color: #FFD700;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-            z-index: 998;
-            animation: scrollUnroll 2s ease-in-out forwards;
+            top: -50px;
+            left: ${leftPos}%;
+            font-size: ${size}px;
+            opacity: 0.8;
+            z-index: 50;
+            animation: coinFall ${duration}s linear forwards;
             pointer-events: none;
-            font-family: serif;
         `;
 
-        document.body.appendChild(scroll);
+        container.appendChild(coin);
 
+        // 動畫結束後移除元素
         setTimeout(() => {
-            scroll.remove();
-        }, 2000);
+            coin.remove();
+        }, duration * 1000);
     }
+
+    /* addLanternSwing 已整合到 createLanternDecorations 中 */
 
     /**
      * 移除裝飾元素
@@ -679,16 +719,22 @@ export class ThemeConfig {
             container.innerHTML = '';
         }
 
-        // 移除煙火動畫樣式
+        // 清除所有計時器
+        if (this.fireworkInterval) {
+            clearInterval(this.fireworkInterval);
+            this.fireworkInterval = null;
+        }
+        if (this.goldCoinInterval) {
+            clearInterval(this.goldCoinInterval);
+            this.goldCoinInterval = null;
+        }
+
+        // 移除動畫元素
         const fireworks = document.querySelectorAll('.firework');
         fireworks.forEach(fw => fw.remove());
-
-        // 移除特殊動畫元素
-        const curtains = document.querySelectorAll('.curtain-decoration');
-        curtains.forEach(c => c.remove());
-
-        const scrolls = document.querySelectorAll('.scroll-decoration');
-        scrolls.forEach(s => s.remove());
+        
+        const coins = document.querySelectorAll('.gold-coin');
+        coins.forEach(c => c.remove());
     }
 
     /**
