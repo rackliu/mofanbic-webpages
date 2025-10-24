@@ -520,7 +520,7 @@ export class ThemeConfig {
     }
 
     /**
-     * 添加玉兔跳躍動畫
+     * 添加玉兔跳躍動畫（使用 CSS 繪製，避免 emoji 跨平台差異）
      */
     addRabbitAnimation() {
         const container = document.getElementById('festival-theme-settings');
@@ -532,70 +532,109 @@ export class ThemeConfig {
             oldRabbit.remove();
         }
 
-        // 計算響應式位置
-        const viewportHeight = window.innerHeight;
+        // 計算響應式位置和大小
         const viewportWidth = window.innerWidth;
         
-        // 根據螢幕尺寸調整位置
         let bottomPos = '20%';
         let leftPos = '5%';
-        let fontSize = '50px';
+        let scale = 1;
         
         if (viewportWidth <= 480) {
-            // 手機
             bottomPos = '15%';
             leftPos = '3%';
-            fontSize = '35px';
+            scale = 0.7;
         } else if (viewportWidth <= 768) {
-            // 平板
             bottomPos = '18%';
             leftPos = '4%';
-            fontSize = '42px';
+            scale = 0.85;
         }
 
         const rabbit = document.createElement('div');
-        rabbit.className = 'rabbit-decoration';
-        rabbit.innerHTML = '🐰';
+        rabbit.className = 'rabbit-decoration css-rabbit';
+        
         rabbit.style.cssText = `
             position: fixed;
             bottom: ${bottomPos};
             left: ${leftPos};
-            font-size: ${fontSize};
-            opacity: 0.6;
+            width: ${50 * scale}px;
+            height: ${60 * scale}px;
+            opacity: 0.8;
             z-index: 10;
             animation: rabbitHop 4s ease-in-out infinite;
             pointer-events: none;
+            transform: scale(${scale});
+        `;
+
+        // 使用 CSS 繪製玉兔（強調長耳朵）
+        rabbit.innerHTML = `
+            <!-- 左耳 -->
+            <div style="position: absolute; bottom: 45px; left: 8px; width: 12px; height: 35px; background: white; border-radius: 6px 6px 0 0; border: 2px solid #E8B4B8; transform: rotate(-15deg);"></div>
+            <!-- 右耳 -->
+            <div style="position: absolute; bottom: 45px; right: 8px; width: 12px; height: 35px; background: white; border-radius: 6px 6px 0 0; border: 2px solid #E8B4B8; transform: rotate(15deg);"></div>
+            <!-- 耳朵內側 -->
+            <div style="position: absolute; bottom: 50px; left: 11px; width: 6px; height: 20px; background: #FFC0CB; border-radius: 3px; transform: rotate(-15deg);"></div>
+            <div style="position: absolute; bottom: 50px; right: 11px; width: 6px; height: 20px; background: #FFC0CB; border-radius: 3px; transform: rotate(15deg);"></div>
+            <!-- 頭部 -->
+            <div style="position: absolute; bottom: 20px; left: 5px; width: 40px; height: 35px; background: white; border-radius: 50% 50% 45% 45%; border: 2px solid #E8B4B8;"></div>
+            <!-- 眼睛 -->
+            <div style="position: absolute; bottom: 35px; left: 15px; width: 4px; height: 4px; background: black; border-radius: 50%;"></div>
+            <div style="position: absolute; bottom: 35px; right: 15px; width: 4px; height: 4px; background: black; border-radius: 50%;"></div>
+            <!-- 鼻子 -->
+            <div style="position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); width: 3px; height: 3px; background: #FFB6C1; border-radius: 50%;"></div>
+            <!-- 嘴巴 -->
+            <div style="position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); width: 8px; height: 4px; border: 1px solid #FFB6C1; border-top: none; border-radius: 0 0 50% 50%;"></div>
+            <!-- 身體 -->
+            <div style="position: absolute; bottom: 0; left: 8px; width: 34px; height: 25px; background: white; border-radius: 40%; border: 2px solid #E8B4B8;"></div>
+            <!-- 尾巴 -->
+            <div style="position: absolute; bottom: 8px; right: 3px; width: 8px; height: 8px; background: white; border-radius: 50%; border: 2px solid #E8B4B8;"></div>
         `;
 
         container.appendChild(rabbit);
     }
 
     /**
-     * 添加雲層漂浮動畫
+     * 添加雲層漂浮動畫（使用 CSS 繪製，避免 emoji 跨平台差異）
      */
     addCloudAnimation() {
+        const container = document.getElementById('festival-theme-settings');
+        if (!container) return;
+
         const cloudCount = 3;
-        for (let i = 0; i < cloudCount; i++) {
+        const cloudPositions = [
+            { top: '10%', right: '10%' },
+            { top: '30%', right: '25%' },
+            { top: '50%', right: '40%' }
+        ];
+
+        cloudPositions.forEach((pos, i) => {
             const cloud = document.createElement('div');
-            cloud.className = 'cloud-decoration';
-            cloud.innerHTML = '☁';
+            cloud.className = 'cloud-decoration css-cloud';
+            
             cloud.style.cssText = `
                 position: fixed;
-                top: ${10 + i * 20}%;
-                right: ${10 + i * 15}%;
-                font-size: 40px;
-                opacity: 0.4;
+                top: ${pos.top};
+                right: ${pos.right};
+                width: 80px;
+                height: 40px;
+                background: white;
+                border-radius: 50px;
+                opacity: 0.6;
                 z-index: 1;
                 animation: cloudDrift ${5 + i}s ease-in-out infinite;
                 animation-delay: ${i * 0.5}s;
                 pointer-events: none;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             `;
 
-            const container = document.getElementById('festival-theme-settings');
-            if (container) {
-                container.appendChild(cloud);
-            }
-        }
+            // 添加雲朵的圓形部分，讓它更真實
+            cloud.innerHTML = `
+                <div style="position: absolute; top: -15px; left: 15px; width: 30px; height: 30px; background: white; border-radius: 50%;"></div>
+                <div style="position: absolute; top: -20px; left: 35px; width: 35px; height: 35px; background: white; border-radius: 50%;"></div>
+                <div style="position: absolute; top: -15px; right: 15px; width: 28px; height: 28px; background: white; border-radius: 50%;"></div>
+            `;
+
+            container.appendChild(cloud);
+        });
     }
 
     /**
