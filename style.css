@@ -1,3 +1,6 @@
+/* 引入Google字體 - 必須放在最前面 */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
 :root {
   /* Primitive Color Tokens */
   --color-white: rgba(255, 255, 255, 1);
@@ -739,9 +742,6 @@ select.form-control {
 
 /* END PERPLEXITY DESIGN SYSTEM */
 /* 高端精緻女性服飾精品店網站樣式 */
-
-/* 引入Google字體 */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
 
 /* 擴展設計系統顏色變數 */
 :root {
@@ -2230,18 +2230,22 @@ html {
 /* 裝飾元素樣式 */
 .rabbit-decoration {
   animation: rabbitHop 4s ease-in-out infinite;
+  z-index: 9999 !important;
 }
 
 .cloud-decoration {
   animation: cloudDrift 5s ease-in-out infinite;
+  z-index: 9999 !important;
 }
 
 .light-string {
   animation: twinkle 2s ease-in-out infinite;
+  z-index: 9999 !important;
 }
 
 .christmas-ball {
   animation: shine 3s ease-in-out infinite;
+  z-index: 9999 !important;
 }
 
 .curtain-decoration {
@@ -2421,21 +2425,11 @@ html {
   }
 }
 
-/* 手機版優化 - 更小的移動幅度 */
+/* 手機版優化 - 調整動畫參數而非重新定義 */
 @media (max-width: 480px) {
-  @keyframes rabbitHop {
-    0%, 100% {
-      transform: translateY(0) translateX(0);
-    }
-    25% {
-      transform: translateY(-15px) translateX(5px);
-    }
-    50% {
-      transform: translateY(0) translateX(10px);
-    }
-    75% {
-      transform: translateY(-12px) translateX(12px);
-    }
+  .rabbit-decoration {
+    /* 手機版使用較小的動畫比例 */
+    transform: scale(0.8);
   }
 }
 

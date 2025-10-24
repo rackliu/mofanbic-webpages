@@ -411,7 +411,7 @@ export class AnimationSystem {
     preloadImages() {
         const importantImages = [
             'images/home.jpg',
-            'images/home.png'
+            'images/mofanbic_home.jpg'
         ];
 
         Helpers.preloadImages(importantImages);

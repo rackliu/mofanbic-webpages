@@ -30,7 +30,7 @@ export class ThemeConfig {
             // 根據月份決定自動主題
             let autoTheme = 'default';
             if (month === 9 || month === 10) {
-                autoTheme = 'mid-autumn';// mid-autumn
+                autoTheme = 'mid-autumn';
             } else if (month === 12) {
                 autoTheme = 'christmas';
             } else if (month === 1 || month === 2) {
@@ -760,38 +760,153 @@ export class ThemeConfig {
     }
 
     /**
-     * 創建金幣元素（CSS 繪製）
+     * 創建金幣元素（專業圓形金幣造型）
      */
     createGoldCoin(container) {
         const coin = document.createElement('div');
         coin.className = 'gold-coin';
         
         const leftPos = Math.random() * 80 + 10; // 10%-90%
-        const duration = Math.random() * 5 + 10; // 10-15秒（減慢速度）
-        const size = Math.random() * 8 + 24; // 24-32px
+        const duration = Math.random() * 5 + 10; // 10-15秒
+        const size = Math.random() * 12 + 32; // 32-44px
         
         coin.style.cssText = `
             position: fixed;
-            top: -50px;
+            top: -60px;
             left: ${leftPos}%;
             width: ${size}px;
             height: ${size}px;
-            opacity: 0.85;
+            opacity: 0.95;
             z-index: 50;
             animation: coinFall ${duration}s linear forwards;
             pointer-events: none;
+            filter: drop-shadow(0 4px 12px rgba(255, 215, 0, 0.6));
         `;
 
-        // CSS 繪製金幣（圓形，金色漸層）
+        // 專業圓形金幣造型（中間鏤空）
+        const holeSize = size * 0.25; // 改為 25%，更符合傳統銅錢比例
+        const holeRadius = size * 0.02;
+        const timestamp = Date.now();
+        
         coin.innerHTML = `
-            <div style="position: relative; width: 100%; height: 100%;">
-                <!-- 金幣主體 -->
-                <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 30% 30%, #FFD700 0%, #FFA500 50%, #FF8C00 100%); border-radius: 50%; box-shadow: inset 0 -2px 4px rgba(0,0,0,0.3), 0 4px 8px rgba(255,215,0,0.5);"></div>
-                <!-- 金幣高光 -->
-                <div style="position: absolute; top: 15%; left: 20%; width: 40%; height: 30%; background: radial-gradient(ellipse, rgba(255,255,255,0.6) 0%, transparent 70%); border-radius: 50%;"></div>
-                <!-- 金幣符號 $ -->
-                <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: ${size * 0.6}px; font-weight: bold; color: #8B4513; text-shadow: 0 1px 2px rgba(255,255,255,0.5);">$</div>
-            </div>
+            <svg width="${size}" height="${size}" viewBox="0 0 100 100" style="position: absolute; top: 0; left: 0;">
+                <defs>
+                    <!-- 金色線性漸層定義（扁平效果） -->
+                    <linearGradient id="goldGradient-${timestamp}" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:#FFD700" />
+                        <stop offset="30%" style="stop-color:#FDB931" />
+                        <stop offset="50%" style="stop-color:#F4A300" />
+                        <stop offset="70%" style="stop-color:#E6A82E" />
+                        <stop offset="100%" style="stop-color:#D4AF37" />
+                    </linearGradient>
+                    
+                    <!-- 方孔內陰影濾鏡 -->
+                    <filter id="innerShadow-${timestamp}">
+                        <feGaussianBlur in="SourceAlpha" stdDeviation="1.5"/>
+                        <feOffset dx="0" dy="1" result="offsetblur"/>
+                        <feComponentTransfer>
+                            <feFuncA type="linear" slope="0.8"/>
+                        </feComponentTransfer>
+                        <feMerge>
+                            <feMergeNode/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                    
+                    <!-- 鏤空遮罩 -->
+                    <mask id="coinMask-${timestamp}">
+                        <circle cx="50" cy="50" r="50" fill="white"/>
+                        <rect x="${50 - (holeSize/size * 50)}" y="${50 - (holeSize/size * 50)}"
+                              width="${holeSize/size * 100}" height="${holeSize/size * 100}"
+                              rx="${holeRadius/size * 100}" fill="black"/>
+                    </mask>
+                </defs>
+                
+                <!-- 金幣主體（外圓內方鏤空） -->
+                <circle cx="50" cy="50" r="50"
+                        fill="url(#goldGradient-${timestamp})"
+                        mask="url(#coinMask-${timestamp})"
+                        style="filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3))"/>
+                
+                <!-- 外圈金邊 -->
+                <circle cx="50" cy="50" r="46"
+                        fill="none"
+                        stroke="#B8941F"
+                        stroke-width="2"
+                        style="opacity: 0.8"/>
+                
+                <!-- 內圈裝飾 -->
+                <circle cx="50" cy="50" r="37.5"
+                        fill="none"
+                        stroke="rgba(184, 148, 31, 0.5)"
+                        stroke-width="1.5"/>
+                
+                <!-- 方孔邊緣描邊（與金幣外圈顏色一致） -->
+                <rect x="${50 - (holeSize/size * 50)}" y="${50 - (holeSize/size * 50)}"
+                      width="${holeSize/size * 100}" height="${holeSize/size * 100}"
+                      rx="${holeRadius/size * 100}"
+                      fill="none"
+                      stroke="#B8941F"
+                      stroke-width="2"
+                      style="opacity: 0.9"/>
+                
+                <!-- 方孔內側高光邊緣（較淺的金色） -->
+                <rect x="${50 - (holeSize/size * 50) + 0.8}" y="${50 - (holeSize/size * 50) + 0.8}"
+                      width="${holeSize/size * 100 - 1.6}" height="${holeSize/size * 100 - 1.6}"
+                      rx="${holeRadius/size * 100 - 0.8}"
+                      fill="none"
+                      stroke="rgba(184, 148, 31, 0.6)"
+                      stroke-width="1.2"/>
+            </svg>
+            
+            <!-- 方孔底部陰影（增強深度感，使用金色調） -->
+            <div style="
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                width: ${holeSize + 6}px;
+                height: ${holeSize + 6}px;
+                border-radius: ${holeRadius}px;
+                box-shadow:
+                    inset 0 2px 3px rgba(139, 69, 19, 0.4),
+                    inset 0 -1px 2px rgba(212, 175, 55, 0.3);
+                pointer-events: none;
+            "></div>
+            
+            <!-- 頂部高光效果（扁平金幣） -->
+            <div style="
+                position: absolute;
+                top: 15%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60%;
+                height: 20%;
+                background: linear-gradient(180deg,
+                    rgba(255, 255, 255, 0.5) 0%,
+                    rgba(255, 255, 255, 0.2) 60%,
+                    transparent 100%
+                );
+                border-radius: 50%;
+                pointer-events: none;
+            "></div>
+            
+            <!-- 底部陰影（扁平效果） -->
+            <div style="
+                position: absolute;
+                bottom: 15%;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 60%;
+                height: 20%;
+                background: linear-gradient(0deg,
+                    rgba(0, 0, 0, 0.15) 0%,
+                    rgba(0, 0, 0, 0.05) 60%,
+                    transparent 100%
+                );
+                border-radius: 50%;
+                pointer-events: none;
+            "></div>
         `;
 
         container.appendChild(coin);
