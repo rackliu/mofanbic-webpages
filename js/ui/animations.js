@@ -15,8 +15,7 @@ export const themeAnimations = {
         animations: [
             { name: 'rabbitHop', duration: '4s', description: '玉兔跳躍動畫' },
             { name: 'cloudDrift', duration: '5s', description: '雲層漂浮動畫' },
-            { name: 'moonGlow', duration: '3s', description: '月亮微光閃爍' },
-            { name: 'lanternFloat', duration: '4s', description: '燈籠漂浮動畫' }
+            { name: 'moonGlow', duration: '3s', description: '月亮微光閃爍' }
         ]
     },
     'christmas': {

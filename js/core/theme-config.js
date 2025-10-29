@@ -27,7 +27,7 @@ export class ThemeConfig {
             const now = new Date();
             const month = now.getMonth() + 1;
             
-            // 根據月份決定自動主題
+            // 根據月份決定自動主題 mid-autumn、christmas、lunar-new-year
             let autoTheme = 'default';
             if (month === 9 || month === 10) {
                 autoTheme = 'mid-autumn';
