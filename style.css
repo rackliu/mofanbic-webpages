@@ -1911,7 +1911,7 @@ textarea.form-control {
 
 /* 頁腳 */
 .footer {
-  background: linear-gradient(135deg, var(--color-rose-gold-dark) 0%, var(--color-mauve) 100%);
+  background: linear-gradient(135deg, var(--color-rose-gold-dark) 0%, var(--color-mauve) 30%);
   color: white;
   padding: 4rem 0 2rem;
 }
