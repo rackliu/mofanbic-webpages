@@ -7,7 +7,8 @@ import { Navigation } from '../ui/navigation.js';
 import { FormHandler } from '../ui/form-handler.js';
 import { AnimationSystem } from '../ui/animations.js';
 import { NotificationSystem } from '../ui/notification.js';
-import { ProductCarousel } from '../ui/carousel.js';
+import { Lookbook } from '../ui/lookbook.js';
+import { Accordion } from '../ui/accordion.js';
 import { FestivalTheme } from '../ui/festival-theme.js';
 import { ThemeConfig } from './theme-config.js';
 import { ThemeSettings } from './theme-settings.js';
@@ -53,8 +54,17 @@ export class MofanbicApp {
             this.modules.formHandler = new FormHandler();
             this.modules.animations = AnimationSystem.init();
             
-            // 初始化產品輪播
-            this.initializeProductCarousel();
+            // 初始化當季風尚 (Lookbook)
+            this.initializeLookbook();
+
+            // 初始化 FAQ 摺疊面板 (Accordion)
+            this.initializeAccordion();
+
+            // 初始化 Lucide 線條圖示
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+                console.log('✨ Lucide 圖示初始化成功');
+            }
 
             // 初始化主題系統
             this.initializeThemeSystem();
@@ -573,28 +583,36 @@ export class MofanbicApp {
     }
 
     /**
-     * 初始化產品輪播
+     * 初始化當季風尚 (Lookbook)
      */
-    initializeProductCarousel() {
+    initializeLookbook() {
         try {
-            const carouselContainer = document.querySelector('.products-carousel');
-            if (carouselContainer) {
-                this.modules.productCarousel = new ProductCarousel(carouselContainer, {
-                    autoPlay: true,
-                    autoPlayInterval: 5000,
-                    imagePath: 'images/products/',
-                    imagePrefix: 'product',
-                    imageExtension: '.jpg',
-                    maxImages: 20,
-                    pauseOnHover: true
-                });
-
-                console.log('🎠 產品輪播模組已載入');
+            const container = document.querySelector('#lookbookTrack');
+            if (container) {
+                this.modules.lookbook = new Lookbook('#lookbookTrack');
+                console.log('🖼️ 當季風尚 (Lookbook) 模組已載入');
             } else {
-                console.log('🔍 未找到產品輪播容器，跳過初始化');
+                console.log('🔍 未找到 Lookbook 容器，跳過初始化');
             }
         } catch (error) {
-            console.error('產品輪播初始化失敗:', error);
+            console.error('當季風尚 (Lookbook) 初始化失敗:', error);
+        }
+    }
+
+    /**
+     * 初始化 FAQ 摺疊面板 (Accordion)
+     */
+    initializeAccordion() {
+        try {
+            const container = document.querySelector('.faq-list');
+            if (container) {
+                this.modules.accordion = new Accordion('.faq-list');
+                console.log('🔌 FAQ 摺疊面板 (Accordion) 模組已載入');
+            } else {
+                console.log('🔍 未找到 FAQ 摺疊面板容器，跳過初始化');
+            }
+        } catch (error) {
+            console.error('FAQ 摺疊面板 (Accordion) 初始化失敗:', error);
         }
     }
 

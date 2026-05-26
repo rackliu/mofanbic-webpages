@@ -18,11 +18,13 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="莫凡比精品服飾 - 台北女裝推薦">
     <meta name="twitter:description" content="台北精品女裝店推薦，提供設計師品牌女裝與專業造型顧問服務">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=1.0.1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <!-- 結構化資料 (Schema.org JSON-LD) for GEO優化 -->
     <script type="application/ld+json">
     {
@@ -164,9 +166,7 @@
                 </ul>
                 <div class="navbar-actions">
                     <a href="tel:02-2754-3029" class="contact-btn">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-                        </svg>
+                        <i data-lucide="phone"></i>
                         02-2754-3029
                     </a>
                     <div class="hamburger">
@@ -204,32 +204,17 @@
     <!-- 節日主題裝飾容器 -->
     <div id="festival-theme-settings" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5;"></div>
 
-    <!-- 精選服飾商品展示 -->
+    <!-- 當季風尚 (Seasonal Lookbook) -->
     <section id="products" class="products-showcase">
         <div class="container">
             <div class="section-header">
-                <span class="section-subtitle">FEATURED PRODUCTS</span>
-                <h2>精選商品展示</h2>
+                <span class="section-subtitle">SEASONAL LOOKBOOK</span>
+                <h2>當季風尚</h2>
                 <p>台北精品女裝專業精選的設計師品牌時尚單品，展現現代女性的獨特品味</p>
             </div>
-            <div class="products-carousel">
-                <div class="carousel-container">
-                    <div class="carousel-track" id="carouselTrack">
-                        <!-- 商品圖片將由 JavaScript 動態載入 -->
-                    </div>
-                    <button class="carousel-btn carousel-btn-prev" id="prevBtn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="m15 18-6-6 6-6"/>
-                        </svg>
-                    </button>
-                    <button class="carousel-btn carousel-btn-next" id="nextBtn">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="m9 18 6-6-6-6"/>
-                        </svg>
-                    </button>
-                </div>
-                <div class="carousel-indicators" id="carouselIndicators">
-                    <!-- 指示點將由 JavaScript 動態生成 -->
+            <div class="lookbook-container">
+                <div class="lookbook-track" id="lookbookTrack">
+                    <!-- 商品將由 lookbook.js 動態載入 -->
                 </div>
             </div>
         </div>
@@ -249,25 +234,18 @@
                         <p>莫凡比精品服飾致力於為每位女性顧客提供最優質的台北時尚服飾體驗。我們精選國內設計師品牌女裝，結合專業的造型顧問服務，為現代女性打造獨一無二的個人風格。</p>
                         <p>無論是日常穿搭、商務場合或特殊活動，我們都能為您找到完美的精品女裝選擇。在台北安和路的高級女裝店，時尚不只是衣著，更是一種生活態度。</p>
                     </div>
-                    <div class="brand-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">10+</div>
-                            <div class="stat-label">年專業經驗</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">1000+</div>
-                            <div class="stat-label">滿意顧客</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">10+</div>
-                            <div class="stat-label">精選品牌</div>
-                        </div>
-                    </div>
                 </div>
                 <div class="brand-image">
                     <img src="images/mofanbic_home.jpg" alt="莫凡比精品服飾 - 台北女裝推薦品牌形象">
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- 品牌標語區塊 (Slogan) -->
+    <section class="brand-slogan">
+        <div class="container">
+            <p class="slogan-text">“ 尋找屬於妳的獨特風格，在莫凡比，每一件精品都是完美的選擇。 ”</p>
         </div>
     </section>
 
@@ -280,22 +258,22 @@
             </div>
             <div class="highlights-grid">
                 <div class="highlight-item">
-                    <div class="highlight-icon">👗</div>
+                    <div class="highlight-icon"><i data-lucide="hanger"></i></div>
                     <h4>精選台灣設計師品牌</h4>
                     <p>專為現代女性打造，結合時尚與實用的精品女裝，展現獨特個人風格</p>
                 </div>
                 <div class="highlight-item">
-                    <div class="highlight-icon">✨</div>
+                    <div class="highlight-icon"><i data-lucide="sparkles"></i></div>
                     <h4>專業造型顧問團隊</h4>
                     <p>資深店長提供量身打造的穿搭建議，根據身型、膚色、場合需求打造完美造型</p>
                 </div>
                 <div class="highlight-item">
-                    <div class="highlight-icon">💎</div>
+                    <div class="highlight-icon"><i data-lucide="gem"></i></div>
                     <h4>VIP尊貴服務體驗</h4>
                     <p>專屬會員優惠、新品預覽、生日特惠與私人購物時光等尊榮服務</p>
                 </div>
                 <div class="highlight-item">
-                    <div class="highlight-icon">📍</div>
+                    <div class="highlight-icon"><i data-lucide="map-pin"></i></div>
                     <h4>便利交通位置</h4>
                     <p>鄰近信義安和站，步行4分鐘可達，周邊多條公車路線及停車場</p>
                 </div>
@@ -313,22 +291,22 @@
             </div>
             <div class="services-grid">
                 <div class="service-card" data-aos="fade-up" data-aos-delay="100">
-                    <div class="service-icon">👗</div>
+                    <div class="service-icon"><i data-lucide="hanger"></i></div>
                     <h3>精品女裝</h3>
                     <p>精選台灣設計師品牌女裝，從經典優雅到前衛時尚，滿足現代女性的各種穿搭需求</p>
                 </div>
                 <div class="service-card" data-aos="fade-up" data-aos-delay="200">
-                    <div class="service-icon">💎</div>
+                    <div class="service-icon"><i data-lucide="gem"></i></div>
                     <h3>精緻配件</h3>
                     <p>精品配件、珠寶首飾、絲巾等時尚配件，為女性整體造型增添奢華質感</p>
                 </div>
                 <div class="service-card" data-aos="fade-up" data-aos-delay="300">
-                    <div class="service-icon">✨</div>
+                    <div class="service-icon"><i data-lucide="sparkles"></i></div>
                     <h3>專業造型顧問</h3>
                     <p>資深店長根據您的身型、膚色、場合需求為您打造專屬風格</p>
                 </div>
                 <div class="service-card" data-aos="fade-up" data-aos-delay="400">
-                    <div class="service-icon">🎖️</div>
+                    <div class="service-icon"><i data-lucide="award"></i></div>
                     <h3>VIP尊貴服務</h3>
                     <p>專屬會員優惠、新品預覽、生日特惠、私人購物時光等尊榮體驗</p>
                 </div>
@@ -340,13 +318,13 @@
     <section id="announcement" class="announcement">
         <div class="container">
             <div class="announcement-card">
-                <div class="announcement-icon">🏪</div>
+                <div class="announcement-icon"><i data-lucide="store"></i></div>
                 <div class="announcement-content">
                     <h3>重要公告 - 店面搬遷通知</h3>
                     <p>親愛的顧客，我們即將搬遷至全新地址：<strong>台北市大安區安和路二段69巷8號</strong>。新店面將為您提供更舒適的購物環境和更完善的服務設施。</p>
                     <div class="announcement-highlight">
-                        <p>📍 新地址：台北市大安區安和路二段69巷8號</p>
-                        <p>⚠️ Facebook上的舊地址資訊已不再適用，請以新地址為準</p>
+                        <p><i data-lucide="map-pin"></i> 新地址：台北市大安區安和路二段69巷8號</p>
+                        <p><i data-lucide="alert-triangle"></i> Facebook上的舊地址資訊已不再適用，請以新地址為準</p>
                     </div>
                     <p class="announcement-note">感謝您的支持與理解！</p>
                 </div>
@@ -366,7 +344,7 @@
             <!-- 店面地址 -->
             <div class="address-section">
                 <div class="address-card">
-                    <h3>📍 店面地址</h3>
+                    <h3><i data-lucide="map-pin"></i> 店面地址</h3>
                     <div class="address-details">
                         <p class="main-address">台北市大安區安和路二段69巷8號</p>
                         <p class="area-info">位於大安區精華地段，鄰近信義安和商圈、通化夜市，交通便利，生活機能完整</p>
@@ -379,7 +357,7 @@
                 <!-- 捷運資訊 -->
                 <div class="transport-card">
                     <div class="transport-header">
-                        <div class="transport-icon mrt-icon">🚇</div>
+                        <div class="transport-icon mrt-icon"><i data-lucide="subway"></i></div>
                         <h3>捷運資訊</h3>
                     </div>
                     <div class="transport-content">
@@ -398,7 +376,7 @@
                 <!-- 公車資訊 -->
                 <div class="transport-card">
                     <div class="transport-header">
-                        <div class="transport-icon bus-icon">🚌</div>
+                        <div class="transport-icon bus-icon"><i data-lucide="bus"></i></div>
                         <h3>公車資訊</h3>
                     </div>
                     <div class="transport-content">
@@ -430,7 +408,7 @@
                 <!-- 停車資訊 -->
                 <div class="transport-card">
                     <div class="transport-header">
-                        <div class="transport-icon parking-icon">🅿️</div>
+                        <div class="transport-icon parking-icon"><i data-lucide="car"></i></div>
                         <h3>停車資訊</h3>
                     </div>
                     <div class="transport-content">
@@ -498,24 +476,49 @@
             </div>
             <div class="faq-list">
                 <div class="faq-item">
-                    <h3>莫凡比精品服飾提供哪些服務？</h3>
-                    <p>我們提供精選國內設計師品牌女裝、精緻配件、專業造型顧問與VIP尊貴服務，滿足現代女性多元需求。</p>
+                    <div class="faq-header">
+                        <h3>莫凡比精品服飾提供哪些服務？</h3>
+                        <span class="faq-icon"><i data-lucide="plus"></i></span>
+                    </div>
+                    <div class="faq-content">
+                        <p>我們提供精選國內設計師品牌女裝、精緻配件、專業造型顧問與VIP尊貴服務，滿足現代女性多元需求。</p>
+                    </div>
                 </div>
                 <div class="faq-item">
-                    <h3>店面地址與營業時間？</h3>
-                    <p>地址：台北市大安區安和路二段69巷8號。營業時間：週二至週六 12:00-20:30，週日與週一公休。</p>
+                    <div class="faq-header">
+                        <h3>店面地址與營業時間？</h3>
+                        <span class="faq-icon"><i data-lucide="plus"></i></span>
+                    </div>
+                    <div class="faq-content">
+                        <p>地址：台北市大安區安和路二段69巷8號。營業時間：週二至週六 12:00-20:30，週日與週一公休。</p>
+                    </div>
                 </div>
                 <div class="faq-item">
-                    <h3>是否提供造型顧問諮詢？</h3>
-                    <p>有，資深店長可依您的需求提供專業造型建議，歡迎預約。</p>
+                    <div class="faq-header">
+                        <h3>是否提供造型顧問諮詢？</h3>
+                        <span class="faq-icon"><i data-lucide="plus"></i></span>
+                    </div>
+                    <div class="faq-content">
+                        <p>有，資深店長可依您的需求提供專業造型建議，歡迎預約。</p>
+                    </div>
                 </div>
                 <div class="faq-item">
-                    <h3>如何預約VIP尊貴服務？</h3>
-                    <p>請來電 02-2754-3029 或加入LINE官方帳號預約專屬服務。</p>
+                    <div class="faq-header">
+                        <h3>如何預約VIP尊貴服務？</h3>
+                        <span class="faq-icon"><i data-lucide="plus"></i></span>
+                    </div>
+                    <div class="faq-content">
+                        <p>請來電 02-2754-3029 或加入LINE官方帳號預約專屬服務。</p>
+                    </div>
                 </div>
                 <div class="faq-item">
-                    <h3>有哪些交通方式可到達？</h3>
-                    <p>可搭乘捷運至信義安和站，或多條公車路線，周邊亦有多處停車場。</p>
+                    <div class="faq-header">
+                        <h3>有哪些交通方式可到達？</h3>
+                        <span class="faq-icon"><i data-lucide="plus"></i></span>
+                    </div>
+                    <div class="faq-content">
+                        <p>可搭乘捷運至信義安和站，或多條公車路線，周邊亦有多處停車場。</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -534,44 +537,37 @@
                 <!-- 聯繫資訊 -->
                 <div class="contact-info">
                     <div class="contact-card">
-                        <div class="contact-icon">📞</div>
+                        <div class="contact-icon"><i data-lucide="phone"></i></div>
                         <h3>聯繫電話</h3>
                         <p><a href="tel:02-2754-3029">02-2754-3029</a></p>
                     </div>
                     
                     <div class="contact-card">
-                        <div class="contact-icon">🕒</div>
+                        <div class="contact-icon"><i data-lucide="clock"></i></div>
                         <h3>營業時間</h3>
-                        <p>🕒 週二至週六<br>12:00-20:30</p>
-                        <p>🕒 週日：休假</p>
-                        <p>🕒 週一：休假<br>（可來電預約）</p>
+                        <p>週二至週六：12:00-20:30</p>
+                        <p>週日與週一：公休<br>（可來電預約）</p>
                     </div>
                     
                     <div class="contact-card">
-                        <div class="contact-icon">📍</div>
+                        <div class="contact-icon"><i data-lucide="map-pin"></i></div>
                         <h3>店面地址</h3>
                         <p>台北市大安區<br>安和路二段69巷8號</p>
                     </div>
                     
                     <div class="contact-card">
-                        <div class="contact-icon">📘</div>
+                        <div class="contact-icon"><i data-lucide="facebook"></i></div>
                         <h3>Facebook官方粉絲專頁</h3>
                         <a href="https://www.facebook.com/profile.php?id=100057659101240" target="_blank" class="facebook-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                            </svg>
                             追蹤粉絲專頁
                         </a>
                         <p class="facebook-note">關注最新時尚資訊與活動</p>
                     </div>
                     
                     <div class="contact-card">
-                        <div class="contact-icon">💬</div>
+                        <div class="contact-icon"><i data-lucide="message-square"></i></div>
                         <h3>LINE官方帳號</h3>
                         <a href="https://lin.ee/HpATuvG" target="_blank" class="line-btn">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                                <path fill="currentColor" d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63h2.386c.349 0 .63.285.63.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.391-.09-.51-.25l-2.443-3.317v2.94c0 .344-.279.629-.631.629-.346 0-.626-.285-.626-.629V8.108c0-.27.173-.51.43-.595.06-.023.136-.033.194-.033.195 0 .375.104.495.254l2.462 3.33V8.108c0-.345.282-.63.63-.63.345 0 .63.285.63.63v4.771zm-5.741 0c0 .344-.282.629-.631.629-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.627-.63.349 0 .631.285.631.63v4.771zm-2.466.629H4.917c-.345 0-.63-.285-.63-.629V8.108c0-.345.285-.63.63-.63.348 0 .63.285.63.63v4.141h1.756c.348 0 .629.283.629.63 0 .344-.282.628-.629.628M24 10.314C24 4.943 18.615.572 12.017.572S0 4.943 0 10.314c0 4.811 4.27 8.842 10.035 9.608.391.082.923.258 1.058.59.12.301.079.766.038 1.08l-.164 1.02c-.045.301-.24 1.186 1.049.645 1.291-.539 6.916-4.078 9.436-6.975C23.176 14.393 24 12.458 24 10.314"/>
-                            </svg>
                             加入LINE好友
                         </a>
                         <p class="line-note">立即加入獲得最新優惠資訊</p>
@@ -608,8 +604,8 @@
                 <div class="footer-section">
                     <h4>聯繫資訊</h4>
                     <div class="footer-info">
-                        <p>📞 02-2754-3029</p>
-                        <p>📍 台北市大安區安和路二段69巷8號</p>
+                        <p><i data-lucide="phone"></i> 02-2754-3029</p>
+                        <p><i data-lucide="map-pin"></i> 台北市大安區安和路二段69巷8號</p>
                     </div>
                 </div>
                 
@@ -626,9 +622,9 @@
                 <div class="footer-section">
                     <h4>交通方式</h4>
                     <div class="footer-transport">
-                        <p>🚇 信義安和站 4分鐘</p>
-                        <p>🚌 多條公車路線</p>
-                        <p>🅿️ 周邊停車便利</p>
+                        <p><i data-lucide="subway"></i> 信義安和站 4分鐘</p>
+                        <p><i data-lucide="bus"></i> 多條公車路線</p>
+                        <p><i data-lucide="car"></i> 周邊停車便利</p>
                     </div>
                 </div>
             </div>
