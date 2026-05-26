@@ -20,10 +20,10 @@ export const LOOKBOOK_ITEMS = [
     },
     {
         id: 3,
-        title: "都會修身西裝外套",
+        title: "",
         primaryImage: "images/products/product5.jpg",
-        detailImage: "images/products/product6.jpg",
-        description: "挺闊版型結合極簡線條，為現代都會女性打造自信俐落的職場與日常穿搭。"
+        detailImage: "images/products/product5.jpg",
+        description: ""
     },
     {
         id: 4,
