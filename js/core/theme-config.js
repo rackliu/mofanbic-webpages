@@ -70,21 +70,21 @@ export class ThemeConfig {
                 name: '預設主題',
                 description: '莫凡比精品服飾標準主題',
                 colors: {
-                    primary: '#33A8C4',
-                    secondary: '#8B7355',
-                    accent: '#E8B4B8',
+                    primary: '#1A1A1A',
+                    secondary: '#767676',
+                    accent: '#1A1A1A',
                     background: '#FCFCF9',
                     surface: '#FFFEF7',
-                    text: '#13323C',
-                    textSecondary: '#627082',
-                    border: '#E8B4B8',
-                    roseGold: '#E8B4B8',
-                    roseGoldLight: '#F5D5D7',
-                    roseGoldDark: '#D4969A'
+                    text: '#1A1A1A',
+                    textSecondary: '#767676',
+                    border: '#E5E5E5',
+                    roseGold: '#1A1A1A',
+                    roseGoldLight: '#FBFBFA',
+                    roseGoldDark: '#1A1A1A'
                 },
                 gradients: {
-                    primary: 'linear-gradient(135deg, #E8B4B8 0%, #F7E7CE 100%)',
-                    hero: 'linear-gradient(135deg, rgba(232, 180, 184, 0.8) 0%, rgba(247, 231, 206, 0.8) 100%)',
+                    primary: 'linear-gradient(135deg, #1A1A1A 0%, #333333 100%)',
+                    hero: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.55) 100%)',
                     card: 'linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 246, 244, 0.9) 100%)'
                 },
                 animations: {
@@ -254,6 +254,11 @@ export class ThemeConfig {
         // 套用顏色變數
         Object.entries(config.colors).forEach(([key, value]) => {
             root.style.setProperty(`--color-${key}`, value);
+            // 同時套用 kebab-case 格式以相容 CSS 變數 (例如 roseGoldDark -> rose-gold-dark)
+            const kebabKey = key.replace(/([A-Z])/g, '-$1').toLowerCase();
+            if (kebabKey !== key) {
+                root.style.setProperty(`--color-${kebabKey}`, value);
+            }
         });
 
         // 套用漸變變數
