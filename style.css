@@ -1075,6 +1075,17 @@ body {
   color: var(--color-rose-gold-dark);
 }
 
+.btn-white {
+  background: white;
+  color: var(--color-rose-gold-dark);
+  border: 2px solid white;
+}
+
+.btn-white:hover {
+  background: transparent;
+  color: white;
+}
+
 .btn-full {
   width: 100%;
 }
