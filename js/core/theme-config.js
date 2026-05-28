@@ -17,40 +17,9 @@ export class ThemeConfig {
      * 決定初始主題
      */
     determineInitialTheme() {
-        const storedTheme = this.getStoredTheme();
-        
-        // 檢查是否啟用自動主題
-        const autoThemeEnabled = this.settings.isAutoThemeEnabled();
-        console.log(`⚙️ 自動主題設定: ${autoThemeEnabled ? '啟用' : '停用'}`);
-        
-        if (autoThemeEnabled) {
-            const now = new Date();
-            const month = now.getMonth() + 1;
-            
-            // 根據月份決定自動主題 mid-autumn、christmas、lunar-new-year
-            let autoTheme = 'default';
-            if (month === 9 || month === 10) {
-                autoTheme = 'mid-autumn';
-            } else if (month === 12) {
-                autoTheme = 'christmas';
-            } else if (month === 1 || month === 2) {
-                autoTheme = 'lunar-new-year';
-            }
-            
-            if (autoTheme !== 'default') {
-                console.log(`🎯 自動主題已啟用: ${autoTheme} (當前月份: ${month}月)`);
-                return autoTheme;
-            }
-            
-            console.log(`📅 當前月份 ${month}月 無對應節日主題，使用儲存的主題或預設主題`);
-        } else {
-            console.log('⚙️ 自動主題已停用，使用儲存的主題');
-        }
-        
-        // 使用儲存的主題或預設主題
-        const finalTheme = storedTheme || 'default';
-        console.log(`📌 最終使用主題: ${finalTheme}`);
-        return finalTheme;
+        // 目前版本暫停主題切換，一律強制回歸並使用預設主題
+        console.log('📌 主題切換已暫停，使用預設主題: default');
+        return 'default';
     }
 
     /**

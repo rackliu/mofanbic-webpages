@@ -621,18 +621,29 @@ export class MofanbicApp {
      */
     initializeThemeSystem() {
         try {
+            // 一次性清除舊使用者的主題暫存（解決中秋主題污染與舊版暫存問題）
+            const CLEANUP_KEY = 'mofanbic-theme-cleanup-2026';
+            if (!localStorage.getItem(CLEANUP_KEY)) {
+                localStorage.removeItem('mofanbic-theme');
+                localStorage.removeItem('mofanbic-theme-settings');
+                localStorage.removeItem('mofanbic-festival-theme');
+                localStorage.setItem(CLEANUP_KEY, 'true');
+                console.log('🧹 已成功清空舊版主題快取資料');
+            }
+
             this.modules.themeConfig = new ThemeConfig();
 
             // 設置主題切換監聽器
             this.setupThemeEventListeners();
 
-            // 建立主題切換開發工具（開發模式）
+            // 建立主題切換開發工具（開發模式下，由於目前暫停主題切換，因此跳過建立）
             const isDev = this.isDevelopmentMode();
             console.log(`🔧 開發模式檢測: ${isDev}`);
             console.log(`🔧 當前 URL: ${location.href}`);
             console.log(`🔧 Hostname: ${location.hostname}`);
             console.log(`🔧 Protocol: ${location.protocol}`);
             
+            /*
             if (isDev) {
                 console.log('🎨 正在建立主題開發工具...');
                 this.createThemeDevTools();
@@ -640,8 +651,10 @@ export class MofanbicApp {
             } else {
                 console.log('⚠️ 非開發模式，跳過主題開發工具');
             }
-
             console.log('🎨 主題系統已載入');
+            */
+            
+            console.log('🎨 主題系統已載入 (主題切換功能已暫停)');
         } catch (error) {
             console.error('主題系統初始化失敗:', error);
         }
