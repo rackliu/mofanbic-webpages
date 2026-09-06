@@ -6,38 +6,87 @@
 export const LOOKBOOK_ITEMS = [
     {
         id: 1,
-        title: "藍色兩件式套裝",
-        primaryImage: "images/products/S__82747399_0.jpg",
-        detailImage: "images/products/S__82747399_0.jpg",
-        description: "淺藍色兩件式百褶裙裝，展現海濱度假的清新與優雅。"
+        title: "",
+        primaryImage: "images/products/product1.jpg",
+        detailImage: "images/products/product1.jpg",
+        description: ""
     },
     {
         id: 2,
-        title: "小香風短外套+寬褲",
-        primaryImage: "images/products/S__82747400_0.jpg",
-        detailImage: "images/products/S__82747400_0.jpg",
-        description: "氣質短外套搭配率性大口袋寬褲，演繹都會知性風尚。"
+        title: "",
+        primaryImage: "images/products/product2.jpg",
+        detailImage: "images/products/product2.jpg",
+        description: ""
     },
     {
         id: 3,
-        title: "花卉層次長洋裝",
-        primaryImage: "images/products/S__82747401_0.jpg",
-        detailImage: "images/products/S__82747401_0.jpg",
-        description: "迷人花卉印花層次長洋裝，盡顯溫柔優雅的飄逸氣息。"
+        title: "",
+        primaryImage: "images/products/product3.jpg",
+        detailImage: "images/products/product3.jpg",
+        description: ""
     },
     {
         id: 4,
-        title: "白色泡泡袖長洋裝",
-        primaryImage: "images/products/S__82747402_0.jpg",
-        detailImage: "images/products/S__82747402_0.jpg",
-        description: "純白泡泡袖洋裝結合精緻細節，散發復古典雅迷人魅力。"
+        title: "",
+        primaryImage: "images/products/product4.jpg",
+        detailImage: "images/products/product4.jpg",
+        description: ""
     },
     {
         id: 5,
-        title: "水墨領結上衣+黑裙",
-        primaryImage: "images/products/S__82747403_0.jpg",
-        detailImage: "images/products/S__82747403_0.jpg",
-        description: "雅緻圖騰領結上衣搭配黑色長裙，展露知性優雅美感。"
+        title: "",
+        primaryImage: "images/products/product5.jpg",
+        detailImage: "images/products/product5.jpg",
+        description: ""
+    },
+    {
+        id: 6,
+        title: "",
+        primaryImage: "images/products/product6.jpg",
+        detailImage: "images/products/product6.jpg",
+        description: ""
+    },
+    {
+        id: 7,
+        title: "",
+        primaryImage: "images/products/product7.jpg",
+        detailImage: "images/products/product7.jpg",
+        description: ""
+    },
+    {
+        id: 8,
+        title: "",
+        primaryImage: "images/products/product8.jpg",
+        detailImage: "images/products/product8.jpg",
+        description: ""
+    },
+    {
+        id: 9,
+        title: "",
+        primaryImage: "images/products/product9.jpg",
+        detailImage: "images/products/product9.jpg",
+        description: ""
+    },
+        {
+        id: 10,
+        title: "",
+        primaryImage: "images/products/product10.jpg",
+        detailImage: "images/products/product10.jpg",
+        description: ""
+    },
+    {
+        id: 11,
+        title: "",
+        primaryImage: "images/products/product11.jpg",
+        detailImage: "images/products/product11.jpg",
+        description: ""
+    },
+    {
+        id: 12,
+        title: "",
+        primaryImage: "images/products/product12.jpg",
+        detailImage: "images/products/product12.jpg",
+        description: ""
     }
 ];
 
