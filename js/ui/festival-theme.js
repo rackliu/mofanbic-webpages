@@ -46,19 +46,10 @@ export class FestivalTheme {
         this.init();
     }
 
-    /**
-     * 初始化節日主題模組
-     */
     init() {
-        // DOM 載入完成後初始化
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', () => this.setupEventListeners());
-        } else {
-            this.setupEventListeners();
-        }
-
-        // 根據當前月份自動選擇節日主題
-        this.setAutoFestival();
+        // 暫停節日主題功能，直接返回
+        console.log('🔒 舊版節日主題已停用');
+        return;
     }
 
     /**

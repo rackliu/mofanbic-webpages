@@ -8,7 +8,7 @@ export class ThemeSettings {
         // 先定義預設設定
         this.defaultSettings = {
             currentTheme: 'default',
-            autoTheme: true,
+            autoTheme: false,
             rememberTheme: true,
             showIndicator: true,
             animationDuration: 500,
